@@ -28,16 +28,6 @@ shift + alt - l : chunkc tiling::window --warp east
 
 alt - r : chunkc tiling::desktop --rotate 90
 
-# send window to desktop and follow focus
-shift + cmd - p : chunkc tiling::window --send-to-desktop prev;
-shift + cmd - n : chunkc tiling::window --send-to-desktop next;
-shift + cmd - 1 : chunkc tiling::window --send-to-desktop 1;
-shift + cmd - 2 : chunkc tiling::window --send-to-desktop 2;
-shift + cmd - 3 : chunkc tiling::window --send-to-desktop 3;
-shift + cmd - 4 : chunkc tiling::window --send-to-desktop 4;
-shift + cmd - 5 : chunkc tiling::window --send-to-desktop 5;
-shift + cmd - 6 : chunkc tiling::window --send-to-desktop 6;
-
 # send window to monitor and follow focus
 ctrl + cmd - p  : chunkc tiling::window --send-to-monitor prev; chunkc tiling::monitor -f prev
 ctrl + cmd - n  : chunkc tiling::window --send-to-monitor next; chunkc tiling::monitor -f next
