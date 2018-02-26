@@ -49,12 +49,3 @@ let g:NERDTreeHijackNetrw=1
 
 " paste without overwriting yarned text
 xnoremap p "_dP
-
-" Latex Settings
-autocmd FileType tex map <F5> :VimtexCompile<CR>
-
-let g:deoplete#enable_at_startup = 1
-if !exists('g:deoplete#omni#input_patterns')
-	let g:deoplete#omni#input_patterns = {}
-endif
-let g:deoplete#omni#input_patterns.tex = g:vimtex#re#deoplete
