@@ -20,8 +20,13 @@ Plug 'digitaltoad/vim-pug'
 
 call plug#end()
 
+filetype plugin on
+
 " Toggle NerdTree with F6
 nmap <C-k><C-b> :NERDTreeToggle<CR>
+
+set list
+set listchars=eol:¶,tab:!·,trail:·
 
 set tabstop=4
 colorscheme onedark
@@ -29,7 +34,6 @@ syntax on
 set shiftwidth=4
 set smartindent
 set noexpandtab " use tab instead of space to indent
-autocmd FileType python setlocal tabstop=4
 set nu
 set termguicolors
 " Hide -- INSERT -- because lightline includes this
@@ -43,7 +47,6 @@ let vim_markdown_preview_browser='FirefoxDeveloperEdition'
 " Map jj to escape
 inoremap jj <esc>
 
-filetype plugin on
 
 let g:NERDTreeHijackNetrw=1
 
