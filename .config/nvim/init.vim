@@ -1,5 +1,6 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
+" https://vi.stackexchange.com/a/2577/16463
 if !exists("g:os")
     if has("win64") || has("win32") || has("win16")
         let g:os = "Windows"
