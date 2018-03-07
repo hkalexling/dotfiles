@@ -1,5 +1,13 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
+if !exists("g:os")
+    if has("win64") || has("win32") || has("win16")
+        let g:os = "Windows"
+    else
+        let g:os = substitute(system('uname'), '\n', '', '')
+    endif
+endif
+
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'roxma/nvim-completion-manager'
 Plug 'SirVer/ultisnips'
@@ -7,7 +15,6 @@ Plug 'honza/vim-snippets'
 Plug 'brooth/far.vim'
 Plug 'joshdick/onedark.vim'
 Plug 'itchyny/lightline.vim'
-Plug 'euclio/vim-markdown-composer'
 Plug 'scrooloose/nerdcommenter'
 Plug 'pangloss/vim-javascript'
 Plug 'alvan/vim-closetag'
@@ -18,7 +25,23 @@ Plug 'Shougo/deoplete.nvim'
 Plug 'kchmck/vim-coffee-script'
 Plug 'digitaltoad/vim-pug'
 
+if g:os == "Darwin"
+	" Mac only plugins
+	Plug 'euclio/vim-markdown-composer'
+	Plug 'zchee/deoplete-clang'
+	Plug 'Shougo/neoinclude.vim'
+endif
+
 call plug#end()
+
+if g:os == "Darwin"
+	" Mac only configs
+	let vim_markdown_preview_github=1
+	let vim_markdown_preview_browser='FirefoxDeveloperEdition'
+
+	let g:deoplete#sources#clang#libclang_path='/usr/local/Cellar/llvm/5.0.1/lib/libclang.dylib'
+	let g:deoplete#sources#clang#clang_header='/usr/local/Cellar/llvm/5.0.1/lib/clang'
+endif
 
 filetype plugin on
 
@@ -41,14 +64,12 @@ set noshowmode
 " Toggle spell check with F6
 map <F6> :setlocal spell! spelllang=en_us<CR>
 
-let vim_markdown_preview_github=1
-let vim_markdown_preview_browser='FirefoxDeveloperEdition'
-
 " Map jj to escape
 inoremap jj <esc>
-
 
 let g:NERDTreeHijackNetrw=1
 
 " paste without overwriting yarned text
 xnoremap p "_dP
+
+let g:deoplete#enable_at_startup=1
