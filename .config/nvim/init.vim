@@ -25,12 +25,14 @@ Plug 'lervag/vimtex'
 Plug 'Shougo/deoplete.nvim'
 Plug 'kchmck/vim-coffee-script'
 Plug 'digitaltoad/vim-pug'
+Plug 'Valloric/YouCompleteMe'
+Plug 'justinmk/vim-syntax-extra'
 
 if g:os == "Darwin"
 	" Mac only plugins
 	Plug 'euclio/vim-markdown-composer'
-	Plug 'zchee/deoplete-clang'
-	Plug 'Shougo/neoinclude.vim'
+	"Plug 'zchee/deoplete-clang'
+	"Plug 'Shougo/neoinclude.vim'
 endif
 
 call plug#end()
@@ -40,11 +42,12 @@ if g:os == "Darwin"
 	let vim_markdown_preview_github=1
 	let vim_markdown_preview_browser='FirefoxDeveloperEdition'
 
-	let g:deoplete#sources#clang#libclang_path='/usr/local/Cellar/llvm/5.0.1/lib/libclang.dylib'
-	let g:deoplete#sources#clang#clang_header='/usr/local/Cellar/llvm/5.0.1/lib/clang'
+	"let g:deoplete#sources#clang#libclang_path='/usr/local/Cellar/llvm/5.0.1/lib/libclang.dylib'
+	"let g:deoplete#sources#clang#clang_header='/usr/local/Cellar/llvm/5.0.1/lib/clang'
 endif
 
 filetype plugin on
+filetype indent on
 
 " Toggle NerdTree with F6
 nmap <C-k><C-b> :NERDTreeToggle<CR>
@@ -73,4 +76,4 @@ let g:NERDTreeHijackNetrw=1
 " paste without overwriting yarned text
 xnoremap p "_dP
 
-let g:deoplete#enable_at_startup=1
+"let g:deoplete#enable_at_startup=1
