@@ -22,7 +22,6 @@ Plug 'alvan/vim-closetag'
 Plug 'hkalexling/jshint.vim'
 Plug 'Chiel92/vim-autoformat'
 Plug 'lervag/vimtex'
-Plug 'Shougo/deoplete.nvim'
 Plug 'kchmck/vim-coffee-script'
 Plug 'digitaltoad/vim-pug'
 Plug 'Valloric/YouCompleteMe'
@@ -31,8 +30,6 @@ Plug 'justinmk/vim-syntax-extra'
 if g:os == "Darwin"
 	" Mac only plugins
 	Plug 'euclio/vim-markdown-composer'
-	"Plug 'zchee/deoplete-clang'
-	"Plug 'Shougo/neoinclude.vim'
 endif
 
 call plug#end()
@@ -41,9 +38,6 @@ if g:os == "Darwin"
 	" Mac only configs
 	let vim_markdown_preview_github=1
 	let vim_markdown_preview_browser='FirefoxDeveloperEdition'
-
-	"let g:deoplete#sources#clang#libclang_path='/usr/local/Cellar/llvm/5.0.1/lib/libclang.dylib'
-	"let g:deoplete#sources#clang#clang_header='/usr/local/Cellar/llvm/5.0.1/lib/clang'
 endif
 
 filetype plugin on
