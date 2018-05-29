@@ -106,3 +106,4 @@ chunkc tiling::rule --owner \"App Store\" --state float
 chunkc tiling::rule --owner Tweetbot --state float
 chunkc tiling::rule --owner Wavebox --state float
 chunkc tiling::rule --owner NeteaseMusic --state float
+chunkc tiling::rule --owner Hyper --state float
