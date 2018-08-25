@@ -27,6 +27,7 @@ Plug 'digitaltoad/vim-pug'
 Plug 'Valloric/YouCompleteMe'
 Plug 'justinmk/vim-syntax-extra'
 Plug 'wakatime/vim-wakatime'
+Plug 'leafgarland/typescript-vim'
 
 if g:os == "Darwin"
 	" Mac only plugins
