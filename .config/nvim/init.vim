@@ -28,6 +28,7 @@ Plug 'Valloric/YouCompleteMe'
 Plug 'justinmk/vim-syntax-extra'
 Plug 'wakatime/vim-wakatime'
 Plug 'leafgarland/typescript-vim'
+Plug 'chr4/nginx.vim'
 
 if g:os == "Darwin"
 	" Mac only plugins
@@ -73,3 +74,9 @@ let g:NERDTreeHijackNetrw=1
 xnoremap p "_dP
 
 "let g:deoplete#enable_at_startup=1
+
+" nginx file type
+au BufRead,BufNewFile *.nginx set ft=nginx
+au BufRead,BufNewFile */etc/nginx/* set ft=nginx
+au BufRead,BufNewFile */usr/local/nginx/conf/* set ft=nginx
+au BufRead,BufNewFile nginx.conf set ft=nginx
