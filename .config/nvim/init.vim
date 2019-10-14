@@ -28,6 +28,7 @@ Plug 'Valloric/YouCompleteMe'
 Plug 'justinmk/vim-syntax-extra'
 Plug 'wakatime/vim-wakatime'
 Plug 'leafgarland/typescript-vim'
+Plug 'chiel92/vim-autoformat'
 
 if g:os == "Darwin"
 	" Mac only plugins
@@ -72,4 +73,10 @@ let g:NERDTreeHijackNetrw=1
 " paste without overwriting yarned text
 xnoremap p "_dP
 
-"let g:deoplete#enable_at_startup=1
+" disable default formating for foreign languages
+let g:autoformat_autoindent = 0
+let g:autoformat_retab = 0
+let g:autoformat_remove_trailing_spaces = 0
+" Map to F3 and auto format on writing
+noremap <F3> :Autoformat<CR>
+au BufWrite * :Autoformat
