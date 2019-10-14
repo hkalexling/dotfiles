@@ -29,6 +29,7 @@ Plug 'justinmk/vim-syntax-extra'
 Plug 'wakatime/vim-wakatime'
 Plug 'leafgarland/typescript-vim'
 Plug 'chiel92/vim-autoformat'
+Plug 'chr4/nginx.vim'
 
 if g:os == "Darwin"
 	" Mac only plugins
@@ -80,3 +81,9 @@ let g:autoformat_remove_trailing_spaces = 0
 " Map to F3 and auto format on writing
 noremap <F3> :Autoformat<CR>
 au BufWrite * :Autoformat
+
+" nginx file type
+au BufRead,BufNewFile *.nginx set ft=nginx
+au BufRead,BufNewFile */etc/nginx/* set ft=nginx
+au BufRead,BufNewFile */usr/local/nginx/conf/* set ft=nginx
+au BufRead,BufNewFile nginx.conf set ft=nginx
