@@ -10,7 +10,6 @@ if !exists("g:os")
 endif
 
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'roxma/nvim-completion-manager'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'brooth/far.vim'
