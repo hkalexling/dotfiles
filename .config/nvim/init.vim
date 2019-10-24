@@ -16,20 +16,22 @@ Plug 'brooth/far.vim'
 Plug 'joshdick/onedark.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'scrooloose/nerdcommenter'
-Plug 'pangloss/vim-javascript'
 Plug 'alvan/vim-closetag'
 Plug 'hkalexling/jshint.vim'
 Plug 'Chiel92/vim-autoformat'
-Plug 'lervag/vimtex'
+Plug 'Valloric/YouCompleteMe'
+Plug 'wakatime/vim-wakatime'
+Plug 'chiel92/vim-autoformat'
+Plug 'junegunn/goyo.vim'
+
+" language syntaxs/supports
+Plug 'justinmk/vim-syntax-extra'
+Plug 'pangloss/vim-javascript'
 Plug 'kchmck/vim-coffee-script'
 Plug 'digitaltoad/vim-pug'
-Plug 'Valloric/YouCompleteMe'
-Plug 'justinmk/vim-syntax-extra'
-Plug 'wakatime/vim-wakatime'
 Plug 'leafgarland/typescript-vim'
-Plug 'chiel92/vim-autoformat'
 Plug 'chr4/nginx.vim'
-Plug 'junegunn/goyo.vim'
+Plug 'lervag/vimtex'
 
 if g:os == "Darwin"
 	" Mac only plugins
@@ -44,13 +46,14 @@ if g:os == "Darwin"
 	let vim_markdown_preview_browser='FirefoxDeveloperEdition'
 endif
 
+colorscheme onedark
+
 filetype plugin on
 filetype indent on
 set list
 set listchars=eol:¶,tab:!·,trail:·
 set clipboard=unnamedplus " use system clipboard
 set tabstop=4
-colorscheme onedark
 syntax on
 set shiftwidth=4
 set smartindent
@@ -81,7 +84,6 @@ xnoremap p "_dP
 " disable default formating for foreign languages
 let g:autoformat_autoindent = 0
 let g:autoformat_retab = 0
-let g:autoformat_remove_trailing_spaces = 0
 " Map to F3 and auto format on writing
 noremap <F3> :Autoformat<CR>
 au BufWrite * :Autoformat
