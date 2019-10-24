@@ -53,6 +53,7 @@ nmap <C-k><C-b> :NERDTreeToggle<CR>
 set list
 set listchars=eol:¶,tab:!·,trail:·
 
+set clipboard=unnamedplus
 set tabstop=4
 colorscheme onedark
 syntax on
@@ -93,3 +94,4 @@ au BufRead,BufNewFile nginx.conf set ft=nginx
 
 " YCM disable loading confirmation of .ycm_extra_conf.py
 let g:ycm_confirm_extra_conf=0
+
