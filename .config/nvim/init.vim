@@ -82,6 +82,9 @@ let g:autoformat_remove_trailing_spaces = 0
 noremap <F3> :Autoformat<CR>
 au BufWrite * :Autoformat
 
+" 80 column line
+set colorcolumn=80
+
 " nginx file type
 au BufRead,BufNewFile *.nginx set ft=nginx
 au BufRead,BufNewFile */etc/nginx/* set ft=nginx
