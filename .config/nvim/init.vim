@@ -46,14 +46,9 @@ endif
 
 filetype plugin on
 filetype indent on
-
-" Toggle NerdTree with F6
-nmap <C-k><C-b> :NERDTreeToggle<CR>
-
 set list
 set listchars=eol:¶,tab:!·,trail:·
-
-set clipboard=unnamedplus
+set clipboard=unnamedplus " use system clipboard
 set tabstop=4
 colorscheme onedark
 syntax on
@@ -62,14 +57,22 @@ set smartindent
 set noexpandtab " use tab instead of space to indent
 set nu
 set termguicolors
-" Hide -- INSERT -- because lightline includes this
 set noshowmode
-" Toggle spell check with F6
-map <F6> :setlocal spell! spelllang=en_us<CR>
+set colorcolumn=80 " 80 column line
 
 " Map jj to escape
 inoremap jj <esc>
 
+" Toggle spell check with F6
+map <F6> :setlocal spell! spelllang=en_us<CR>
+
+" UltiSnips keys
+let g:UltiSnipsExpandTrigger="kk"
+let g:UltiSnipsJumpForwardTrigger="<C-j>"
+let g:UltiSnipsJumpBackwardTrigger="<C-k>"
+
+" Toggle NerdTree with C-k C-b
+nmap <C-k><C-b> :NERDTreeToggle<CR>
 let g:NERDTreeHijackNetrw=1
 
 " paste without overwriting yarned text
@@ -83,9 +86,6 @@ let g:autoformat_remove_trailing_spaces = 0
 noremap <F3> :Autoformat<CR>
 au BufWrite * :Autoformat
 
-" 80 column line
-set colorcolumn=80
-
 " nginx file type
 au BufRead,BufNewFile *.nginx set ft=nginx
 au BufRead,BufNewFile */etc/nginx/* set ft=nginx
@@ -94,4 +94,3 @@ au BufRead,BufNewFile nginx.conf set ft=nginx
 
 " YCM disable loading confirmation of .ycm_extra_conf.py
 let g:ycm_confirm_extra_conf=0
-
