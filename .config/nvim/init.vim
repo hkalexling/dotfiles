@@ -29,6 +29,7 @@ Plug 'wakatime/vim-wakatime'
 Plug 'leafgarland/typescript-vim'
 Plug 'chiel92/vim-autoformat'
 Plug 'chr4/nginx.vim'
+Plug 'junegunn/goyo.vim'
 
 if g:os == "Darwin"
 	" Mac only plugins
