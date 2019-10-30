@@ -23,6 +23,8 @@ Plug 'Valloric/YouCompleteMe'
 Plug 'wakatime/vim-wakatime'
 Plug 'chiel92/vim-autoformat'
 Plug 'junegunn/goyo.vim'
+Plug 'rbgrouleff/bclose.vim'
+Plug 'francoiscabrol/ranger.vim'
 
 " language syntaxs/supports
 Plug 'justinmk/vim-syntax-extra'
@@ -47,6 +49,8 @@ if g:os == "Darwin"
 endif
 
 colorscheme onedark
+
+let mapleader = " "
 
 filetype plugin on
 filetype indent on
@@ -76,7 +80,6 @@ let g:UltiSnipsJumpBackwardTrigger="<C-k>"
 
 " Toggle NerdTree with C-k C-b
 nmap <C-k><C-b> :NERDTreeToggle<CR>
-let g:NERDTreeHijackNetrw=1
 
 " paste without overwriting yarned text
 xnoremap p "_dP
@@ -96,3 +99,7 @@ au BufRead,BufNewFile nginx.conf set ft=nginx
 
 " YCM disable loading confirmation of .ycm_extra_conf.py
 let g:ycm_confirm_extra_conf=0
+
+let g:NERDTreeHijackNetrw = 0
+let g:ranger_replace_netrw = 1
+let g:ranger_command_override = 'ranger --cmd "set show_hidden=true"'
