@@ -74,7 +74,7 @@ inoremap jj <esc>
 map <F6> :setlocal spell! spelllang=en_us<CR>
 
 " UltiSnips keys
-let g:UltiSnipsExpandTrigger="kk"
+let g:UltiSnipsExpandTrigger="<C-j><C-k>"
 let g:UltiSnipsJumpForwardTrigger="<C-j>"
 let g:UltiSnipsJumpBackwardTrigger="<C-k>"
 
