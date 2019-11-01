@@ -103,3 +103,6 @@ let g:ycm_confirm_extra_conf=0
 let g:NERDTreeHijackNetrw = 0
 let g:ranger_replace_netrw = 1
 let g:ranger_command_override = 'ranger --cmd "set show_hidden=true"'
+
+" Exit terminal with ESC
+tnoremap <Esc> <C-\><C-n>
