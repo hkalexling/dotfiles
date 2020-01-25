@@ -50,7 +50,6 @@ configuration {
 /*	window-format: "{w}    {i}{c}   {t}";*/
 /*	click-to-exit: true;*/
 /*	show-match: true;*/
-/*theme: "DarkBlue";*/
 theme: "~/.cache/wal/colors-rofi-dark.rasi";
 /*	color-normal: ;*/
 /*	color-urgent: ;*/

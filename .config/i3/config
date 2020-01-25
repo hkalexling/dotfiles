@@ -9,11 +9,18 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
+# commands to run at login
+exec --no-startup-id compton &
+exec --no-startup-id wal-scale -R
+
+# gaps
+gaps inner 15
+
 set $mod Mod1
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font monospace 12
+font pango:monospace 12
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -54,35 +61,18 @@ bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
-# split in horizontal orientation
-bindsym $mod+Mod4+h split h
-
-# split in vertical orientation
-bindsym $mod+Mod4+v split v
-
 # togglee split direction
 bindsym $mod+Shift+t layout tabbed
 bindsym $mod+t layout toggle split
 
+# alternating layout
+exec_always --no-startup-id ~/.i3/alternating_layouts.py
+
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
 
-# change container layout (stacked, tabbed, toggle split)
-#bindsym $mod+s layout stacking
-#bindsym $mod+w layout tabbed
-#bindsym $mod+e layout toggle split
-
 # toggle tiling / floating
 bindsym $mod+space floating toggle
-
-# change focus between tiling / floating windows
-#bindsym $mod+space  mode_toggle
-
-# focus the parent container
-#bindsym $mod+a focus parent
-
-# focus the child container
-#bindsym $mod+d focus child
 
 # new workspace
 bindsym $mod+n exec --no-startup-id ~/.i3/new_workspace.sh
@@ -120,24 +110,16 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
-
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
         bindsym h resize shrink width 10 px or 10 ppt
         bindsym k resize grow height 10 px or 10 ppt
         bindsym j resize shrink height 10 px or 10 ppt
         bindsym l resize grow width 10 px or 10 ppt
 
-        ## same bindings, but for the arrow keys
-        #bibdsym Left resize shrink width 10 px or 10 ppt
-        #bindsym Down resize grow height 10 px or 10 ppt
-        #bindsym Up resize shrink height 10 px or 10 ppt
-        #bindsym Right resize grow width 10 px or 10 ppt
+        bindsym Control+h resize shrink width 1 px or 1 ppt
+        bindsym Control+k resize grow height 1 px or 1 ppt
+        bindsym Control+j resize shrink height 1 px or 1 ppt
+        bindsym Control+l resize grow width 1 px or 1 ppt
 
-        # back to normal: Enter or Escape
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
@@ -160,14 +142,10 @@ bindsym $mod+Control+f exec "firefox"
 # mount/unmount drives
 bindsym $mod+m exec ~/.i3/mount.sh
 
-# https://www.reddit.com/r/i3wm/comments/65vis5/screenshot_commands_from_my_i3_config/
-# full screen screenshot
-bindsym --release Print exec scrot 'screenshot_%Y%m%d_%H%M%S.png' -e 'mkdir -p ~/Pictures/screenshots && mv $f ~/Pictures/screenshots && xclip -selection clipboard -t image/png -i ~/Pictures/screenshots/`ls -1 -t ~/Pictures/screenshots | head -1`'
-# window screenshot
-bindsym --release Shift+Print exec scrot -s 'screenshot_%Y%m%d_%H%M%S.png' -e 'mkdir -p ~/Pictures/screenshots && mv $f ~/Pictures/screenshots && xclip -selection clipboard -t image/png -i ~/Pictures/screenshots/`ls -1 -t ~/Pictures/screenshots | head -1`'
+# screenshot
+bindsym Print exec gnome-screenshot
+bindsym Shift+Print exec gnome-screenshot -i
 
 # twitter chrome shortcut
 for_window [title="Twitter" class="Chromium-browser"] floating enable; resize set 500 1000; move absolute position center
 
-# gaps
-gaps inner 15
