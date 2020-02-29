@@ -25,6 +25,7 @@ Plug 'chiel92/vim-autoformat'
 Plug 'junegunn/goyo.vim'
 Plug 'rbgrouleff/bclose.vim'
 Plug 'francoiscabrol/ranger.vim'
+"Plug 'dylanaraps/wal.vim'
 
 " language syntaxs/supports
 Plug 'justinmk/vim-syntax-extra'
