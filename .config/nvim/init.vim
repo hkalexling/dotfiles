@@ -19,7 +19,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'alvan/vim-closetag'
 Plug 'hkalexling/jshint.vim'
 Plug 'Chiel92/vim-autoformat'
-Plug 'Valloric/YouCompleteMe'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 Plug 'wakatime/vim-wakatime'
 Plug 'chiel92/vim-autoformat'
 Plug 'junegunn/goyo.vim'
@@ -29,11 +29,9 @@ Plug 'francoiscabrol/ranger.vim'
 " language syntaxs/supports
 Plug 'justinmk/vim-syntax-extra'
 Plug 'pangloss/vim-javascript'
-Plug 'kchmck/vim-coffee-script'
 Plug 'digitaltoad/vim-pug'
-Plug 'leafgarland/typescript-vim'
 Plug 'chr4/nginx.vim'
-Plug 'lervag/vimtex'
+Plug 'rhysd/vim-crystal'
 
 if g:os == "Darwin"
 	" Mac only plugins
@@ -106,3 +104,15 @@ let g:ranger_command_override = 'ranger --cmd "set show_hidden=true"'
 
 " Exit terminal with ESC
 tnoremap <Esc> <C-\><C-n>
+
+" Fix the werid `q` character when using nvim over ssh
+set guicursor=
+
+" Set filetype as HTML for ecr files
+autocmd BufNewFile,BufRead *.ecr set ft=html
+
+" Keep trailing spaces in diff
+autocmd FileType diff let g:autoformat_remove_trailing_spaces=0
+
+" Spell check in gitcommit
+autocmd FileType gitcommit setlocal spell spelllang=en_us
