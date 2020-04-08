@@ -117,3 +117,9 @@ autocmd FileType diff let g:autoformat_remove_trailing_spaces=0
 
 " Spell check in gitcommit
 autocmd FileType gitcommit setlocal spell spelllang=en_us
+
+" Respect Crystal formatting
+autocmd FileType crystal setlocal shiftwidth=2 softtabstop=2 expandtab
+" Auto format Crystal
+let g:formatdef_crystal = '"crystal tool format -"'
+let g:formatters_crystal = ['crystal']
