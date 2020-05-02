@@ -35,18 +35,7 @@ Plug 'leafgarland/typescript-vim'
 Plug 'chr4/nginx.vim'
 Plug 'lervag/vimtex'
 
-if g:os == "Darwin"
-	" Mac only plugins
-	Plug 'euclio/vim-markdown-composer'
-endif
-
 call plug#end()
-
-if g:os == "Darwin"
-	" Mac only configs
-	let vim_markdown_preview_github=1
-	let vim_markdown_preview_browser='FirefoxDeveloperEdition'
-endif
 
 colorscheme onedark
 
