@@ -2,11 +2,11 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 " https://vi.stackexchange.com/a/2577/16463
 if !exists("g:os")
-    if has("win64") || has("win32") || has("win16")
-        let g:os = "Windows"
-    else
-        let g:os = substitute(system('uname'), '\n', '', '')
-    endif
+	if has("win64") || has("win32") || has("win16")
+		let g:os = "Windows"
+	else
+		let g:os = substitute(system('uname'), '\n', '', '')
+	endif
 endif
 
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
@@ -18,10 +18,9 @@ Plug 'itchyny/lightline.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'alvan/vim-closetag'
 Plug 'hkalexling/jshint.vim'
-Plug 'Chiel92/vim-autoformat'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 Plug 'wakatime/vim-wakatime'
-Plug 'chiel92/vim-autoformat'
+Plug 'chiel92/vim-autoformat', { 'do': 'npm install -g js-beautify' }
 Plug 'junegunn/goyo.vim'
 Plug 'rbgrouleff/bclose.vim'
 Plug 'francoiscabrol/ranger.vim'
@@ -90,7 +89,18 @@ let g:autoformat_autoindent = 0
 let g:autoformat_retab = 0
 " Map to F3 and auto format on writing
 noremap <F3> :Autoformat<CR>
-au BufWrite * :Autoformat
+
+fun! FormatExceptECR()
+	if stridx(&ft, "ecrystal") < 0
+		" Use autoformat if the file is not ECR
+		:Autoformat
+	else
+		" Use indent rules provided by vim-crystal if it's ECR
+		:normal gg=G
+	endif
+endfun
+
+au BufWrite * call FormatExceptECR()
 
 " nginx file type
 au BufRead,BufNewFile *.nginx set ft=nginx
@@ -113,9 +123,6 @@ tnoremap <Esc> <C-\><C-n>
 " Fix the werid `q` character when using nvim over ssh
 set guicursor=
 
-" Set filetype as HTML for ecr files
-autocmd BufNewFile,BufRead *.ecr set ft=html
-
 " Keep trailing spaces in diff
 autocmd FileType diff let g:autoformat_remove_trailing_spaces=0
 
@@ -124,6 +131,7 @@ autocmd FileType gitcommit setlocal spell spelllang=en_us
 
 " Respect Crystal formatting
 autocmd FileType crystal setlocal shiftwidth=2 softtabstop=2 expandtab
+autocmd FileType ecrystal.* setlocal shiftwidth=2 softtabstop=2 expandtab
 " Auto format Crystal
 let g:formatdef_crystal = '"crystal tool format -"'
 let g:formatters_crystal = ['crystal']
