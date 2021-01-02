@@ -34,6 +34,10 @@ Plug 'pangloss/vim-javascript'
 Plug 'digitaltoad/vim-pug'
 Plug 'chr4/nginx.vim'
 Plug 'rhysd/vim-crystal'
+Plug 'posva/vim-vue'
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install',
+  \ 'for': ['vue'] }
 
 if g:os == "Darwin"
 	" Mac only plugins
