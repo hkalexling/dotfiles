@@ -10,9 +10,6 @@ if !exists("g:os")
 endif
 
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-Plug 'brooth/far.vim'
 Plug 'joshdick/onedark.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'scrooloose/nerdcommenter'
@@ -83,11 +80,6 @@ inoremap jj <esc>
 
 " Toggle spell check with F6
 map <F6> :setlocal spell! spelllang=en_us<CR>
-
-" UltiSnips keys
-let g:UltiSnipsExpandTrigger="<C-j><C-k>"
-let g:UltiSnipsJumpForwardTrigger="<C-j>"
-let g:UltiSnipsJumpBackwardTrigger="<C-k>"
 
 " Toggle NerdTree with C-k C-b
 nmap <C-k><C-b> :NERDTreeToggle<CR>
