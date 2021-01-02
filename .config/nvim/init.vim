@@ -19,10 +19,16 @@ Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 Plug 'wakatime/vim-wakatime'
 Plug 'chiel92/vim-autoformat', { 'do': 'npm install -g js-beautify' }
 Plug 'junegunn/goyo.vim'
+"Plug 'dylanaraps/wal.vim'
+
+" Ranger
 Plug 'rbgrouleff/bclose.vim'
 Plug 'francoiscabrol/ranger.vim'
-"Plug 'dylanaraps/wal.vim'
+
+" Vertical line at column 80
 Plug 'Yggdroot/indentLine'
+
+" Unix commands like :Chmod and :Delete
 Plug 'tpope/vim-eunuch'
 
 " Documentation generator
