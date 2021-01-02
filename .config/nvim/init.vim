@@ -32,6 +32,9 @@ Plug 'kkoomen/vim-doge'
 Plug 'tpope/vim-dadbod'
 Plug 'kristijanhusak/vim-dadbod-ui'
 
+" Ack frontend
+Plug 'dyng/ctrlsf.vim'
+
 " language syntaxs/supports
 Plug 'justinmk/vim-syntax-extra'
 Plug 'pangloss/vim-javascript'
@@ -144,3 +147,6 @@ command Cr :.+1,$tabdo :tabc
 
 autocmd BufWritePost *.vue Prettier
 
+" CtrlSF bindings
+nmap <C-j><C-k> <Plug>CtrlSFPrompt
+nnoremap <C-j><C-j> :CtrlSFToggle<CR>
