@@ -139,5 +139,8 @@ autocmd FileType ecrystal.* setlocal shiftwidth=2 softtabstop=2 expandtab
 let g:formatdef_crystal = '"crystal tool format -"'
 let g:formatters_crystal = ['crystal']
 
+" Close tabs to the right
+command Cr :.+1,$tabdo :tabc
+
 autocmd BufWritePost *.vue Prettier
 
