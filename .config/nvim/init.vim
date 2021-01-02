@@ -28,6 +28,13 @@ Plug 'francoiscabrol/ranger.vim'
 Plug 'Yggdroot/indentLine'
 Plug 'tpope/vim-eunuch'
 
+" Documentation generator
+Plug 'kkoomen/vim-doge'
+
+" DBUI
+Plug 'tpope/vim-dadbod'
+Plug 'kristijanhusak/vim-dadbod-ui'
+
 " language syntaxs/supports
 Plug 'justinmk/vim-syntax-extra'
 Plug 'pangloss/vim-javascript'
