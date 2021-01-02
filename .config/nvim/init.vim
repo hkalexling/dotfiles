@@ -139,3 +139,6 @@ autocmd FileType ecrystal.* setlocal shiftwidth=2 softtabstop=2 expandtab
 " Auto format Crystal
 let g:formatdef_crystal = '"crystal tool format -"'
 let g:formatters_crystal = ['crystal']
+
+autocmd BufWritePost *.vue Prettier
+
