@@ -19,6 +19,7 @@ Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 Plug 'wakatime/vim-wakatime'
 Plug 'chiel92/vim-autoformat', { 'do': 'npm install -g js-beautify' }
 Plug 'junegunn/goyo.vim'
+Plug 'skywind3000/vim-quickui'
 "Plug 'dylanaraps/wal.vim'
 
 " Ranger
@@ -159,3 +160,33 @@ autocmd BufWritePost *.vue Prettier
 " CtrlSF bindings
 nmap <C-j><C-k> <Plug>CtrlSFPrompt
 nnoremap <C-j><C-j> :CtrlSFToggle<CR>
+
+" QuickUI menu
+let g:quickui_border_style = 2
+let g:quickui_color_scheme = 'papercol dark'
+call quickui#menu#reset()
+
+call quickui#menu#install("&File", [
+			\ ["&Unlink\t:Unlink", 'Unlink'],
+			\ ["&Rename\t:Rename", 'exec input("", ":Rename ")'],
+			\ ["&Chmod\t:Chmod", 'exec input("", ":Chmod ")'],
+			\ ["&Mkdir\t:Mkdir", 'exec input("", ":Mkdir ")'],
+			\ ["&Sudo Write\t:SudoWrite", 'SudoWrite'],
+			\ ['--', ''],
+			\ ["Close &Tabs to the Right\t:Cr", ':.+1,$tabdo :tabc']
+			\])
+
+call quickui#menu#install("&Tools", [
+			\ ["Spell &Check %{&spell? 'Off' : 'On'}\tF6", 'setlocal spell! spelllang=en_us'],
+			\ ["&NERDTree\t<C-k><C-b>", 'NERDTreeToggle'],
+			\ ['--', ''],
+			\ ["&Search CtrlSF\t<C-j><C-k>", 'exec input("", ":CtrlSF ")'],
+			\ ["&Open CtrlSF\t<C-j><C-j>", 'CtrlSFToggle'],
+			\ ])
+
+call quickui#menu#install("&Shells", [
+			\ ["&Python", 'call quickui#terminal#open("python3", {"title":"Python 3"})'],
+			\ ["&Node", 'call quickui#terminal#open("node", {"title":"Node"})']
+			\])
+
+noremap <Space><Space> :call quickui#menu#open()<CR>
