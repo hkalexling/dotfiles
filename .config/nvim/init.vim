@@ -41,6 +41,9 @@ Plug 'kristijanhusak/vim-dadbod-ui'
 " Ack frontend
 Plug 'dyng/ctrlsf.vim'
 
+" Highlights unique characters in a line for easier f/t
+Plug 'unblevable/quick-scope'
+
 " language syntaxs/supports
 Plug 'justinmk/vim-syntax-extra'
 Plug 'pangloss/vim-javascript'
