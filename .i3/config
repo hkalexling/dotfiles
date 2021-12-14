@@ -60,6 +60,10 @@ bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
+# move workspace between monitors
+bindsym $mod+Shift+less move workspace to output left
+bindsym $mod+Shift+greater move workspace to output right
+
 # togglee split direction
 #bindsym $mod+Shift+t layout tabbed
 #bindsym $mod+t layout toggle split
@@ -155,6 +159,7 @@ exec --no-startup-id ibus-daemon -xd
 exec --no-startup-id pulseaudio
 exec --no-startup-id kmix
 exec --no-startup-id blueman-applet
+exec --no-startup-id exec bluetoothctl connect EC:2C:E2:EF:94:58
 exec --no-startup-id fcitx5
 
 # Color palette used for the terminal ( ~/.Xresources file )

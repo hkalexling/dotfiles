@@ -64,5 +64,6 @@ export GTK_IM_MODULE=fcitx5
 export QT_IM_MODULE=fcitx5
 export XMODIFIERS=@im=fcitx5
 export SDL_IM_MODULE=fcitx5
+export XIM_PROGRAM=/usr/bin/fcitx5
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
