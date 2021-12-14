@@ -1,8 +1,9 @@
 #!/bin/bash
 
-str="$(nordvpn status | sed -n '3p;5p' | sed 's/:/\n/g' | sed -n '2p;4p' | sed -e 's/^[[:space:]]*//')"
-[ -z "$str" ] && echo "Disconnected" && exit
+str="$(nordvpn status | sed -n '1p;3p;5p' | sed 's/:/\n/g' | sed -n '2p;4p;6p' | sed -e 's/^[[:space:]]*//')"
 IFS=$'\n' read -d "\034" -r -a array <<<"${str}\034"
-country="${array[0]}"
-ip="${array[1]}"
+status="${array[0]}"
+country="${array[1]}"
+ip="${array[2]}"
+[ "$str" == "Disconnected" ] && echo "Disconnected" && exit
 echo "$country ($ip)"

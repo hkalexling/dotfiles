@@ -26,7 +26,7 @@ export EDITOR="nvim"
 export VISUAL="nvim"
 
 # trash
-#alias rm='echo "Please use trash instead"; false'
+alias rm='echo "Please use trash instead"; false'
 
 # History in cache directory:
 HISTSIZE=10000
@@ -56,5 +56,8 @@ export XMODIFIERS="@im=fcitx5"
 
 # replace less with nvim
 alias less='nvim -R -'
+
+# MacOS like open command
+alias open='xdg-open'
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
