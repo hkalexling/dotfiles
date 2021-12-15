@@ -140,9 +140,9 @@ bindsym $mod+Control+w exec "/opt/wavebox.io/wavebox/wavebox"
 bindsym $mod+m exec ~/.i3/mount.sh
 
 # screenshot
+# Deepin can't save to a specify directory when in fullscreen mode (https://github.com/martyr-deepin/deepin-screenshot/issues/32). Using scrot for fullscreen capture.
 bindsym --release Print exec scrot 'screenshot_%Y%m%d_%H%M%S.png' -e 'mkdir -p ~/Pictures/screenshots && mv $f ~/Pictures/screenshots && xclip -selection clipboard -t image/png -i ~/Pictures/screenshots/`ls -1 -t ~/Pictures/screenshots | head -1`'
-bindsym --release Shift+Print exec scrot -s 'screenshot_%Y%m%d_%H%M%S.png' -e 'mkdir -p ~/Pictures/screenshots && mv $f ~/Pictures/screenshots && xclip -selection clipboard -t image/png -i ~/Pictures/screenshots/`ls -1 -t ~/Pictures/screenshots | head -1`'
-
+bindsym --release Shift+Print exec deepin-screenshot -s ~/Pictures/screenshots -n
 # screen recording
 bindsym --release Control+Print exec peek
 
