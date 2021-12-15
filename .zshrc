@@ -60,4 +60,6 @@ alias less='nvim -R -'
 # MacOS like open command
 alias open='xdg-open'
 
+eval $(keychain --eval --quiet --noask id_rsa google_compute_engine github_rsa)
+
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
