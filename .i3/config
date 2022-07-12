@@ -30,7 +30,7 @@ font pango:DejaVu Sans Mono 11
 # X core fonts rendering does not support right-to-left and this being a bitmap
 # font, it doesn’t scale on retina/hidpi displays.
 
-exec --no-startup-id xrandr --output HDMI-0 --primary && xrandr --output DP-1 --auto --left-of HDMI-0 --rotate right
+exec --no-startup-id xrandr --output HDMI-0 --rate 75 --primary && xrandr --output DP-1 --auto --left-of HDMI-0 --rotate right
 
 workspace 1 output HDMI-0
 workspace 9 output DP-1
@@ -154,7 +154,7 @@ bindsym $mod+Control+l exec blurlock
 
 # Autostart applications
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec --no-startup-id nitrogen --restore; sleep 1; picom -b
+exec --no-startup-id nitrogen --restore; sleep 2; picom -b
 exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id pamac-tray
@@ -162,11 +162,12 @@ exec --no-startup-id ~/.i3/conky.sh
 exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
 exec --no-startup-id ibus-daemon -xd
-exec --no-startup-id pulseaudio
 exec --no-startup-id kmix
 exec --no-startup-id blueman-applet
 exec --no-startup-id exec bluetoothctl connect EC:2C:E2:EF:94:58
 exec --no-startup-id fcitx5
+exec --no-startup-id pulseeffects --gapplication-service
+exec --no-startup-id xidlehook --not-when-fullscreen --not-when-audio --timer 300 blurlock ''
 
 # Color palette used for the terminal ( ~/.Xresources file )
 # Colors are gathered based on the documentation:

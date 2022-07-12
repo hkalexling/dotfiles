@@ -60,6 +60,14 @@ alias less='nvim -R -'
 # MacOS like open command
 alias open='xdg-open'
 
+export ANDROID_HOME=/home/alex_ling/Android/Sdk
+
 eval $(keychain --eval --quiet --noask id_rsa google_compute_engine github_rsa)
 
+alias ls='lsd'
+
+nitrogen --restore
+
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+alias copy='xclip -sel clip'
