@@ -71,3 +71,6 @@ nitrogen --restore
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 alias copy='xclip -sel clip'
+
+# system level yadm to manage files in /etc. See https://yadm.io/docs/faq#unconventional-cases
+alias sysyadm="sudo yadm --yadm-dir /etc/yadm --yadm-data /etc/yadm/data"
