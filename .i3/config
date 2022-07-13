@@ -138,6 +138,9 @@ bindsym $mod+Control+Return exec "BROWSER=/usr/bin/chromium && chromium"
 # mount/unmount drives
 bindsym $mod+m exec ~/.i3/mount.sh
 
+# utilities
+bindsym $mod+u exec ~/.i3/util.sh
+
 # screenshot
 # Deepin can't save to a specify directory when in fullscreen mode (https://github.com/martyr-deepin/deepin-screenshot/issues/32). Using scrot for fullscreen capture.
 bindsym --release Print exec scrot 'screenshot_%Y%m%d_%H%M%S.png' -e 'mkdir -p ~/Pictures/screenshots && mv $f ~/Pictures/screenshots && xclip -selection clipboard -t image/png -i ~/Pictures/screenshots/`ls -1 -t ~/Pictures/screenshots | head -1`'
