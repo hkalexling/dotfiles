@@ -8,3 +8,4 @@ if [[ -z "$choice" ]]; then
 fi
 
 xrandr --output eDP-1 --mode "$choice" --rate 60 --primary
+nitrogen --restore
