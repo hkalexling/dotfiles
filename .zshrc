@@ -71,3 +71,5 @@ nitrogen --restore
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 alias copy='xclip -sel clip'
+
+export BROWSER=/usr/bin/chromium

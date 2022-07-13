@@ -133,8 +133,7 @@ bindsym $mod+r mode "resize"
 new_window pixel 5
 
 # launch applications
-bindsym $mod+Control+Return exec "chromium"
-bindsym $mod+Control+w exec "/opt/wavebox.io/wavebox/wavebox"
+bindsym $mod+Control+Return exec "BROWSER=/usr/bin/chromium && chromium"
 
 # mount/unmount drives
 bindsym $mod+m exec ~/.i3/mount.sh
