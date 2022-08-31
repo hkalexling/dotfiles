@@ -15,7 +15,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'alvan/vim-closetag'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
-" Plug 'wakatime/vim-wakatime'
+Plug 'wakatime/vim-wakatime'
 Plug 'chiel92/vim-autoformat', { 'do': 'npm install -g js-beautify' }
 Plug 'junegunn/goyo.vim'
 Plug 'skywind3000/vim-quickui'
