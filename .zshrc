@@ -76,3 +76,6 @@ export BROWSER=/usr/bin/chromium
 
 # system level yadm to manage files in /etc. See https://yadm.io/docs/faq#unconventional-cases
 alias sysyadm="sudo yadm --yadm-dir /etc/yadm --yadm-data /etc/yadm/data"
+
+# use direnv
+eval "$(direnv hook zsh)"
