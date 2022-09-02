@@ -173,6 +173,11 @@ exec --no-startup-id xidlehook --not-when-fullscreen --not-when-audio --timer 30
 # HK's latitude and longitude
 exec --no-startup-id redshift -l 22:114
 
+# Pulse Audio controls
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 3 +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 3 -5% #decrease sound volume
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 3 toggle # mute sound
+
 # Color palette used for the terminal ( ~/.Xresources file )
 # Colors are gathered based on the documentation:
 # https://i3wm.org/docs/userguide.html#xresources
