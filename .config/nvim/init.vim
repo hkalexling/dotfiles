@@ -15,10 +15,12 @@ Plug 'itchyny/lightline.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'alvan/vim-closetag'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
-" Plug 'wakatime/vim-wakatime'
+Plug 'wakatime/vim-wakatime'
 Plug 'chiel92/vim-autoformat', { 'do': 'npm install -g js-beautify' }
+Plug 'dense-analysis/ale'
 Plug 'junegunn/goyo.vim'
 Plug 'skywind3000/vim-quickui'
+"Plug 'dylanaraps/wal.vim'
 
 " Ranger
 Plug 'rbgrouleff/bclose.vim'
@@ -33,6 +35,13 @@ Plug 'tpope/vim-eunuch'
 " Documentation generator
 Plug 'kkoomen/vim-doge'
 
+" DBUI
+Plug 'tpope/vim-dadbod'
+Plug 'kristijanhusak/vim-dadbod-ui'
+
+" Ack frontend
+Plug 'dyng/ctrlsf.vim'
+
 " Highlights unique characters in a line for easier f/t
 Plug 'unblevable/quick-scope'
 
@@ -45,13 +54,11 @@ Plug 'digitaltoad/vim-pug'
 Plug 'chr4/nginx.vim'
 Plug 'rhysd/vim-crystal'
 Plug 'posva/vim-vue'
-Plug 'prettier/vim-prettier', {
-  \ 'do': 'yarn install',
-  \ 'for': ['vue', 'typescript', 'javascript'] }
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'jvirtanen/vim-hcl'
+Plug 'hashivim/vim-terraform'
 
 if g:os == "Darwin"
 	" Mac only plugins
@@ -84,6 +91,7 @@ set nu
 set termguicolors
 set noshowmode
 set colorcolumn=80 " 80 column line
+set relativenumber
 
 " Map jj to escape
 inoremap jj <esc>
@@ -103,17 +111,19 @@ let g:autoformat_retab = 0
 " Map to F3 and auto format on writing
 noremap <F3> :Autoformat<CR>
 
-fun! FormatExceptECR()
-	if stridx(&ft, "ecrystal") < 0
-		" Use autoformat if the file is not ECR
-		:Autoformat
-	else
-		" Use indent rules provided by vim-crystal if it's ECR
+fun! FormatWrapper()
+	let ignoreRegex = "javascript|typescript|react|typescriptreact"
+	let indentRegex = "ecrystal"
+	if match(&ft, ignoreRegex)
+		return
+	elseif match(&ft, indentRegex)
 		:normal gg=G
+	else
+		:Autoformat
 	endif
 endfun
 
-"au BufWrite * call FormatExceptECR()
+au BufWrite * call FormatWrapper()
 
 " nginx file type
 au BufRead,BufNewFile *.nginx set ft=nginx
@@ -152,11 +162,11 @@ let g:formatters_crystal = ['crystal']
 " Close tabs to the right
 command Cr :.+1,$tabdo :tabc
 
-autocmd BufWrite *.vue Prettier
-autocmd BufWrite *.js Prettier
-autocmd BufWrite *.ts Prettier
-autocmd BufWrite *.tsx Prettier
-autocmd BufWrite *.jsx Prettier
+let g:ale_fixers = {
+ \ 'javascript': ['prettier', 'eslint'],
+ \ 'typescript': ['prettier', 'eslint'],
+ \ }
+let g:ale_fix_on_save = 1
 
 " CtrlSF bindings
 nmap <C-j><C-k> <Plug>CtrlSFPrompt
@@ -192,7 +202,7 @@ call quickui#menu#install("&Shells", [
 
 noremap <Space><Space> :call quickui#menu#open()<CR>
 
-let g:prettier#autoformat_require_pragma = 0
-
-au FileType typescript setlocal shiftwidth=2 softtabstop=2 noexpandtab
-au FileType typescriptreact setlocal shiftwidth=2 softtabstop=2 noexpandtab
+au FileType typescript setlocal shiftwidth=2 softtabstop=2 expandtab
+au FileType typescriptreact setlocal shiftwidth=2 softtabstop=2 expandtab
+au FileType javascript setlocal shiftwidth=2 softtabstop=2 expandtab
+au FileType react setlocal shiftwidth=2 softtabstop=2 expandtab
