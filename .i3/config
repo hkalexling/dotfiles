@@ -165,7 +165,7 @@ exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
 exec --no-startup-id ibus-daemon -xd
 exec --no-startup-id pasystray --volume-max=100 --volume-inc=4 --notify=all --key-grabbing
-exec --no-startup-id blueman-applet
+exec --no-startup-id blueberry
 exec --no-startup-id fcitx5
 exec --no-startup-id xidlehook --not-when-fullscreen --not-when-audio --timer 300 blurlock ''
 # HK's latitude and longitude
