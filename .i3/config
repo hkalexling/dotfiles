@@ -130,7 +130,7 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # disable the ugly title bar on windows
-new_window pixel 5
+for_window [class="^.*"] border pixel 5
 
 # launch applications
 bindsym $mod+Control+Return exec "BROWSER=/usr/bin/chromium && chromium"
