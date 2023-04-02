@@ -3,3 +3,5 @@
 	name = Alex Ling
 [credential]
 	helper = cache --timeout=3600
+[includeIf "gitdir:~/Code/bluemeg/"]
+    path = ~/Code/bluemeg/.gitconfig

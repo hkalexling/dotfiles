@@ -18,6 +18,8 @@ application/pdf=chromium.desktop
 application/x-bittorrent=deluge.desktop
 x-scheme-handler/about=chromium.desktop
 x-scheme-handler/unknown=chromium.desktop
+x-scheme-handler/discord-618471189722955807=discord-618471189722955807.desktop
+x-scheme-handler/postman=Postman.desktop
 
 [Added Associations]
 x-scheme-handler/http=chromium.desktop;
