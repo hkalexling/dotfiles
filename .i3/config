@@ -169,8 +169,8 @@ exec --no-startup-id blueberry
 exec --no-startup-id fcitx5
 exec --no-startup-id xidlehook --not-when-fullscreen --not-when-audio --timer 300 blurlock ''
 exec --no-startup-id easyeffects --gapplication-service
-# HK's latitude and longitude
-exec --no-startup-id redshift -l 22:114
+# Vancouver's latitude and longitude
+exec --no-startup-id redshift -l 49:-123
 
 # Color palette used for the terminal ( ~/.Xresources file )
 # Colors are gathered based on the documentation:
