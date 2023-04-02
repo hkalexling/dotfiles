@@ -10,6 +10,6 @@ fi
 
 [[ -z "$(echo "$governors" | grep -w "$choice")" ]] && echo "unknown policy $choice" && exit 1
 
-for num in 0 1 2 3 4 5 6 7 8 9; do
+for num in 0 1 2 3 4 5 6 7; do
 	echo "$choice" > "/sys/devices/system/cpu/cpu$num/cpufreq/scaling_governor"
 done
