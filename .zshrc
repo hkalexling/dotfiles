@@ -66,8 +66,6 @@ eval $(keychain --eval --quiet --noask id_rsa google_compute_engine github_rsa)
 
 alias ls='lsd'
 
-nitrogen --restore
-
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 alias copy='xclip -sel clip'
