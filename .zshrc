@@ -79,3 +79,7 @@ alias sysyadm="sudo yadm --yadm-dir /etc/yadm --yadm-data /etc/yadm/data"
 
 # use direnv
 eval "$(direnv hook zsh)"
+
+# Go setup
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
