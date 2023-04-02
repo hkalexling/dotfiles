@@ -16,7 +16,6 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'alvan/vim-closetag'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 Plug 'wakatime/vim-wakatime'
-Plug 'chiel92/vim-autoformat', { 'do': 'npm install -g js-beautify' }
 Plug 'dense-analysis/ale'
 Plug 'junegunn/goyo.vim'
 Plug 'skywind3000/vim-quickui'
@@ -105,25 +104,24 @@ nmap <C-k><C-b> :NERDTreeToggle<CR>
 " paste without overwriting yarned text
 xnoremap p "_dP
 
-" disable default formating for foreign languages
-let g:autoformat_autoindent = 0
-let g:autoformat_retab = 0
-" Map to F3 and auto format on writing
-noremap <F3> :Autoformat<CR>
+function! DebugMsg(msg) abort
+    if !exists("g:DebugMessages")
+        let g:DebugMessages = []
+    endif
+    call add(g:DebugMessages, a:msg)
+endfunction
 
-fun! FormatWrapper()
-	let ignoreRegex = "javascript|typescript|react|typescriptreact"
-	let indentRegex = "ecrystal"
-	if match(&ft, ignoreRegex)
-		return
-	elseif match(&ft, indentRegex)
-		:normal gg=G
-	else
-		:Autoformat
-	endif
-endfun
+function! PrintDebugMsgs() abort
+  if empty(get(g:, "DebugMessages", []))
+    echo "No debug messages."
+    return
+  endif
+  for ln in g:DebugMessages
+    echo "- " . ln
+  endfor
+endfunction
 
-au BufWrite * call FormatWrapper()
+command DebugStatus call PrintDebugMsgs()
 
 " nginx file type
 au BufRead,BufNewFile *.nginx set ft=nginx
@@ -146,18 +144,12 @@ tnoremap <Esc> <C-\><C-n>
 " Fix the werid `q` character when using nvim over ssh
 set guicursor=
 
-" Keep trailing spaces in diff
-autocmd FileType diff let g:autoformat_remove_trailing_spaces=0
-
 " Spell check in gitcommit
 autocmd FileType gitcommit setlocal spell spelllang=en_us
 
 " Respect Crystal formatting
 autocmd FileType crystal setlocal shiftwidth=2 softtabstop=2 expandtab
 autocmd FileType ecrystal.* setlocal shiftwidth=2 softtabstop=2 expandtab
-" Auto format Crystal
-let g:formatdef_crystal = '"crystal tool format -"'
-let g:formatters_crystal = ['crystal']
 
 " Close tabs to the right
 command Cr :.+1,$tabdo :tabc
@@ -165,6 +157,10 @@ command Cr :.+1,$tabdo :tabc
 let g:ale_fixers = {
  \ 'javascript': ['prettier', 'eslint'],
  \ 'typescript': ['prettier', 'eslint'],
+ \ 'react': ['prettier', 'eslint'],
+ \ 'typescriptreact': ['prettier', 'eslint'],
+ \ 'javascriptreact': ['prettier', 'eslint'],
+ \ 'c': ['clang-format'],
  \ }
 let g:ale_fix_on_save = 1
 
@@ -202,7 +198,14 @@ call quickui#menu#install("&Shells", [
 
 noremap <Space><Space> :call quickui#menu#open()<CR>
 
+" Enable Copilot for md and yml
+let g:copilot_filetypes = {
+			\ 'markdown': v:true,
+			\ 'yaml': v:true,
+			\}
+
 au FileType typescript setlocal shiftwidth=2 softtabstop=2 expandtab
 au FileType typescriptreact setlocal shiftwidth=2 softtabstop=2 expandtab
 au FileType javascript setlocal shiftwidth=2 softtabstop=2 expandtab
 au FileType react setlocal shiftwidth=2 softtabstop=2 expandtab
+au FileType c setlocal shiftwidth=2 softtabstop=2 expandtab
