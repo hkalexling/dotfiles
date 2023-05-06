@@ -58,6 +58,7 @@ Plug 'peitalin/vim-jsx-typescript'
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'jvirtanen/vim-hcl'
 Plug 'hashivim/vim-terraform'
+Plug 'nikvdp/ejs-syntax'
 
 if g:os == "Darwin"
 	" Mac only plugins
@@ -161,6 +162,7 @@ let g:ale_fixers = {
  \ 'typescriptreact': ['prettier', 'eslint'],
  \ 'javascriptreact': ['prettier', 'eslint'],
  \ 'c': ['clang-format'],
+ \ 'json': ['prettier', 'jq'],
  \ }
 let g:ale_fix_on_save = 1
 
