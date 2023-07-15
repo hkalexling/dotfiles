@@ -59,6 +59,7 @@ Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'jvirtanen/vim-hcl'
 Plug 'hashivim/vim-terraform'
 Plug 'nikvdp/ejs-syntax'
+Plug 'habamax/vim-godot'
 
 if g:os == "Darwin"
 	" Mac only plugins
@@ -81,7 +82,6 @@ filetype plugin on
 filetype indent on
 set list
 set listchars=eol:¶,tab:!·,trail:·
-set clipboard=unnamedplus " use system clipboard
 set tabstop=4
 syntax on
 set shiftwidth=4
@@ -205,6 +205,9 @@ let g:copilot_filetypes = {
 			\ 'markdown': v:true,
 			\ 'yaml': v:true,
 			\}
+
+noremap <Leader>y "+y
+noremap <Leader>p "+p
 
 au FileType typescript setlocal shiftwidth=2 softtabstop=2 expandtab
 au FileType typescriptreact setlocal shiftwidth=2 softtabstop=2 expandtab
