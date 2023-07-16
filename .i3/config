@@ -142,11 +142,10 @@ bindsym $mod+m exec ~/.i3/mount.sh
 bindsym $mod+u exec ~/.i3/util.sh
 
 # screenshot
-# Deepin can't save to a specify directory when in fullscreen mode (https://github.com/martyr-deepin/deepin-screenshot/issues/32). Using scrot for fullscreen capture.
-bindsym --release Print exec scrot 'screenshot_%Y%m%d_%H%M%S.png' -e 'mkdir -p ~/Pictures/screenshots && mv $f ~/Pictures/screenshots && xclip -selection clipboard -t image/png -i ~/Pictures/screenshots/`ls -1 -t ~/Pictures/screenshots | head -1`'
-bindsym --release Shift+Print exec deepin-screenshot -s ~/Pictures/screenshots -n
+bindsym --release Print exec maim ~/Pictures/screenshots/screenshot_$(date '+%Y%m%d_%H%M%S').png && notify-send -t 3000 'Screenshot saved'
+bindsym --release Shift+Print exec maim -s ~/Pictures/screenshots/screenshot_$(date '+%Y%m%d_%H%M%S').png && notify-send -t 3000 "Screenshot saved"
 # screen recording
-bindsym --release Control+Print exec peek
+bindsym --release Control+Print exec deepin-screen-recorder --record --no-notification --save-path ~/Videos
 
 # Set shut down, restart and locking features
 bindsym $mod+0 exec ~/.i3/system.sh
