@@ -12,14 +12,14 @@ endif
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'joshdick/onedark.vim'
 Plug 'itchyny/lightline.vim'
+Plug 'mhinz/vim-startify'
 Plug 'scrooloose/nerdcommenter'
 Plug 'alvan/vim-closetag'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
+"Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 Plug 'wakatime/vim-wakatime'
 Plug 'dense-analysis/ale'
 Plug 'junegunn/goyo.vim'
 Plug 'skywind3000/vim-quickui'
-"Plug 'dylanaraps/wal.vim'
 
 " Ranger
 Plug 'rbgrouleff/bclose.vim'
@@ -92,6 +92,7 @@ set termguicolors
 set noshowmode
 set colorcolumn=80 " 80 column line
 set relativenumber
+set scrollback=32768
 
 " Map jj to escape
 inoremap jj <esc>
@@ -155,6 +156,8 @@ autocmd FileType ecrystal.* setlocal shiftwidth=2 softtabstop=2 expandtab
 " Close tabs to the right
 command Cr :.+1,$tabdo :tabc
 
+let g:c_syntax_for_h = 1
+
 let g:ale_fixers = {
  \ 'javascript': ['prettier', 'eslint'],
  \ 'typescript': ['prettier', 'eslint'],
@@ -204,6 +207,7 @@ noremap <Space><Space> :call quickui#menu#open()<CR>
 let g:copilot_filetypes = {
 			\ 'markdown': v:true,
 			\ 'yaml': v:true,
+			\ '' : v:true,
 			\}
 
 noremap <Leader>y "+y
@@ -214,3 +218,6 @@ au FileType typescriptreact setlocal shiftwidth=2 softtabstop=2 expandtab
 au FileType javascript setlocal shiftwidth=2 softtabstop=2 expandtab
 au FileType react setlocal shiftwidth=2 softtabstop=2 expandtab
 au FileType c setlocal shiftwidth=2 softtabstop=2 expandtab
+
+noremap <C-p> :lprev<CR>
+noremap <C-n> :lnext<CR>
