@@ -81,3 +81,6 @@ eval "$(direnv hook zsh)"
 # Go setup
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
+
+# vcpkg
+export VCPKG_ROOT=$HOME/Code/vcpkg
