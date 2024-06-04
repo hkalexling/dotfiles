@@ -30,10 +30,10 @@ font pango:DejaVu Sans Mono 11
 # X core fonts rendering does not support right-to-left and this being a bitmap
 # font, it doesn’t scale on retina/hidpi displays.
 
-exec --no-startup-id xrandr --output eDP-1 --mode 1680x1050 --rate 60 --primary
+exec --no-startup-id xrandr --output eDP-1 --mode 1680x1050 --rate 60 && xrandr --output DP-2 --auto --dpi 96 --right-of eDP-1 --primary
 
-workspace 1 output HDMI-0
-workspace 9 output DP-1
+workspace 1 output DP-2
+workspace 9 output eDP-1
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -169,6 +169,7 @@ exec --no-startup-id fcitx5
 exec --no-startup-id xidlehook --not-when-fullscreen --not-when-audio --timer 300 blurlock ''
 # Vancouver's latitude and longitude
 exec --no-startup-id redshift -l 49:-123
+exec --no-startup-id breaktimer
 
 # Color palette used for the terminal ( ~/.Xresources file )
 # Colors are gathered based on the documentation:
@@ -209,6 +210,8 @@ bar {
 
 # please set your primary output first. Example: 'xrandr --output eDP1 --primary'
 	tray_output primary
+	tray_output DP-3
+	tray_output eDP-1
 
 	bindsym button4 nop
 	bindsym button5 nop
