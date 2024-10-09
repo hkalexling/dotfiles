@@ -12,7 +12,6 @@ endif
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'joshdick/onedark.vim'
 Plug 'itchyny/lightline.vim'
-Plug 'mhinz/vim-startify'
 Plug 'scrooloose/nerdcommenter'
 Plug 'alvan/vim-closetag'
 "Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
@@ -20,6 +19,10 @@ Plug 'wakatime/vim-wakatime'
 Plug 'dense-analysis/ale'
 Plug 'junegunn/goyo.vim'
 Plug 'skywind3000/vim-quickui'
+Plug 'tpope/vim-obsession'
+Plug 'dhruvasagar/vim-prosession'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' }
 
 " Ranger
 Plug 'rbgrouleff/bclose.vim'
@@ -30,16 +33,6 @@ Plug 'Yggdroot/indentLine'
 
 " Unix commands like :Chmod and :Delete
 Plug 'tpope/vim-eunuch'
-
-" Documentation generator
-Plug 'kkoomen/vim-doge'
-
-" DBUI
-Plug 'tpope/vim-dadbod'
-Plug 'kristijanhusak/vim-dadbod-ui'
-
-" Ack frontend
-Plug 'dyng/ctrlsf.vim'
 
 " Highlights unique characters in a line for easier f/t
 Plug 'unblevable/quick-scope'
@@ -61,18 +54,7 @@ Plug 'hashivim/vim-terraform'
 Plug 'nikvdp/ejs-syntax'
 Plug 'habamax/vim-godot'
 
-if g:os == "Darwin"
-	" Mac only plugins
-	Plug 'euclio/vim-markdown-composer'
-endif
-
 call plug#end()
-
-if g:os == "Darwin"
-	" Mac only configs
-	let vim_markdown_preview_github=1
-	let vim_markdown_preview_browser='FirefoxDeveloperEdition'
-endif
 
 colorscheme onedark
 
@@ -169,9 +151,9 @@ let g:ale_fixers = {
  \ }
 let g:ale_fix_on_save = 1
 
-" CtrlSF bindings
-nmap <C-j><C-k> <Plug>CtrlSFPrompt
-nnoremap <C-j><C-j> :CtrlSFToggle<CR>
+" Telescope
+nnoremap ff <cmd>Telescope find_files<cr>
+nnoremap fg <cmd>Telescope live_grep<cr>
 
 " QuickUI menu
 let g:quickui_border_style = 2
@@ -191,15 +173,7 @@ call quickui#menu#install("&File", [
 call quickui#menu#install("&Tools", [
 			\ ["Spell &Check %{&spell? 'Off' : 'On'}\tF6", 'setlocal spell! spelllang=en_us'],
 			\ ["&NERDTree\t<C-k><C-b>", 'NERDTreeToggle'],
-			\ ['--', ''],
-			\ ["&Search CtrlSF\t<C-j><C-k>", 'exec input("", ":CtrlSF ")'],
-			\ ["&Open CtrlSF\t<C-j><C-j>", 'CtrlSFToggle'],
 			\ ])
-
-call quickui#menu#install("&Shells", [
-			\ ["&Python", 'call quickui#terminal#open("python3", {"title":"Python 3"})'],
-			\ ["&Node", 'call quickui#terminal#open("node", {"title":"Node"})']
-			\])
 
 noremap <Space><Space> :call quickui#menu#open()<CR>
 
