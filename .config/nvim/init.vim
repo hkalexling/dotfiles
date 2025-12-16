@@ -24,6 +24,12 @@ Plug 'dhruvasagar/vim-prosession'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.8' }
 
+" Autocompletion and LSP
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'onsails/lspkind.nvim'
+Plug 'neovim/nvim-lspconfig'
+
 " Ranger
 Plug 'rbgrouleff/bclose.vim'
 Plug 'francoiscabrol/ranger.vim'
@@ -37,7 +43,16 @@ Plug 'tpope/vim-eunuch'
 " Highlights unique characters in a line for easier f/t
 Plug 'unblevable/quick-scope'
 
-Plug 'github/copilot.vim', {'branch': 'release'}
+" GitHub Copilot
+Plug 'zbirenbaum/copilot.lua'
+Plug 'zbirenbaum/copilot-cmp'
+
+" Code companion
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'olimorris/codecompanion.nvim'
+Plug 'MeanderingProgrammer/render-markdown.nvim'
+Plug 'echasnovski/mini.diff'
 
 " language syntaxs/supports
 Plug 'justinmk/vim-syntax-extra'
@@ -53,6 +68,9 @@ Plug 'jvirtanen/vim-hcl'
 Plug 'hashivim/vim-terraform'
 Plug 'nikvdp/ejs-syntax'
 Plug 'habamax/vim-godot'
+Plug 'mrcjkb/rustaceanvim'
+Plug 'qnighy/lalrpop.vim'
+Plug 'ziglang/zig.vim'
 
 call plug#end()
 
@@ -128,13 +146,6 @@ tnoremap <Esc> <C-\><C-n>
 " Fix the werid `q` character when using nvim over ssh
 set guicursor=
 
-" Spell check in gitcommit
-autocmd FileType gitcommit setlocal spell spelllang=en_us
-
-" Respect Crystal formatting
-autocmd FileType crystal setlocal shiftwidth=2 softtabstop=2 expandtab
-autocmd FileType ecrystal.* setlocal shiftwidth=2 softtabstop=2 expandtab
-
 " Close tabs to the right
 command Cr :.+1,$tabdo :tabc
 
@@ -148,6 +159,8 @@ let g:ale_fixers = {
  \ 'javascriptreact': ['prettier', 'eslint'],
  \ 'c': ['clang-format'],
  \ 'json': ['prettier', 'jq'],
+ \ 'go': ['gofmt'],
+ \ 'rust': ['rustfmt'],
  \ }
 let g:ale_fix_on_save = 1
 
@@ -167,6 +180,7 @@ call quickui#menu#install("&File", [
 			\ ["&Mkdir\t:Mkdir", 'exec input("", ":Mkdir ")'],
 			\ ["&Sudo Write\t:SudoWrite", 'SudoWrite'],
 			\ ['--', ''],
+			\ ["Close &all tabs", 'enew | tabonly'],
 			\ ["Close &Tabs to the Right\t:Cr", ':.+1,$tabdo :tabc']
 			\])
 
@@ -177,21 +191,93 @@ call quickui#menu#install("&Tools", [
 
 noremap <Space><Space> :call quickui#menu#open()<CR>
 
-" Enable Copilot for md and yml
-let g:copilot_filetypes = {
-			\ 'markdown': v:true,
-			\ 'yaml': v:true,
-			\ '' : v:true,
-			\}
-
 noremap <Leader>y "+y
 noremap <Leader>p "+p
 
+au FileType gitcommit setlocal spell spelllang=en_us
+
+au FileType crystal setlocal shiftwidth=2 softtabstop=2 expandtab
+au FileType ecrystal.* setlocal shiftwidth=2 softtabstop=2 expandtab
+
+" Load LSP fix for Neovim 0.11.3 bug
+lua require('lsp-fix')
 au FileType typescript setlocal shiftwidth=2 softtabstop=2 expandtab
 au FileType typescriptreact setlocal shiftwidth=2 softtabstop=2 expandtab
 au FileType javascript setlocal shiftwidth=2 softtabstop=2 expandtab
 au FileType react setlocal shiftwidth=2 softtabstop=2 expandtab
 au FileType c setlocal shiftwidth=2 softtabstop=2 expandtab
+au FileType c3 setlocal shiftwidth=4 tabstop=4 noexpandtab
 
-noremap <C-p> :lprev<CR>
-noremap <C-n> :lnext<CR>
+let g:NERDCustomDelimiters = { 'c3': { 'left': '/*', 'right': '*/', 'leftAlt': '//' } }
+
+lua << EOF
+local cmp = require('cmp')
+local lspkind = require('lspkind')
+local has_words_before = function()
+	if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
+	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+	return col ~= 0 and vim.api.nvim_buf_get_text(0, line-1, 0, line-1, col, {})[1]:match("^%s*$") == nil
+end
+cmp.setup {
+	sources = {
+		{ name = "copilot" },
+		{ name = 'nvim_lsp' },
+	},
+	mapping = {
+		['<C-k>'] = cmp.mapping.select_prev_item(),
+		['<C-j>'] = cmp.mapping.select_next_item(),
+		['<C-Space>'] = cmp.mapping.complete(),
+		['<C-e>'] = cmp.mapping.abort(),
+		["<Tab>"] = cmp.mapping.confirm({ select = false }),
+	},
+	formatting = {
+		format = lspkind.cmp_format({
+			mode = 'symbol',
+			maxwidth = {
+				menu = 50, -- leading text (labelDetails)
+				abbr = 40, -- actual suggestion item
+			},
+			ellipsis_char = '...',
+			symbol_map = { Copilot = "" },
+			show_labelDetails = true,
+		}),
+	},
+}
+EOF
+
+lua << EOF
+require("copilot").setup({
+	suggestion = { enabled = false },
+	panel = { enabled = false },
+	filetype = {
+		["*"] = true,
+	},
+})
+require("copilot_cmp").setup()
+EOF
+
+lua << EOF
+require('mini.diff').setup()
+EOF
+
+lua << EOF
+require("codecompanion").setup({
+	display = {
+		diff = {
+			enabled = true,
+			provider = "mini_diff", -- default|mini_diff
+		},
+	},
+})
+EOF
+
+lua << EOF
+require('render-markdown').setup({
+	file_types = { 'markdown', 'codecompanion' },
+})
+EOF
+
+lua << EOF
+vim.lsp.enable('zls')
+vim.lsp.enable('clangd')
+EOF
