@@ -215,7 +215,7 @@ vim.cmd("set completeopt+=noselect")
 -- TREESITTER
 -- ============================================================
 
-require 'nvim-treesitter'.install { 'javascript', 'typescript' }
+require('nvim-treesitter').install { 'javascript', 'typescript', 'jsx', 'tsx' }
 
 vim.api.nvim_create_autocmd('FileType', {
   pattern = { 'javascript', 'typescript', 'typescriptreact', 'javascriptreact' },
