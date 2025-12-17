@@ -1,5 +1,5 @@
 -- ============================================================
--- PLUGINS (vim.pack)
+-- PLUGINS
 -- ============================================================
 
 vim.pack.add({
@@ -15,11 +15,13 @@ vim.pack.add({
   'https://github.com/skywind3000/vim-quickui',
   'https://github.com/unblevable/quick-scope',
 
-  -- LSP and treesitter
+  -- LSP
   'https://github.com/neovim/nvim-lspconfig',
   'https://github.com/mason-org/mason.nvim',
   'https://github.com/mason-org/mason-lspconfig.nvim',
   'https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim',
+
+  -- Treesitter
   'https://github.com/nvim-treesitter/nvim-treesitter',
 
   -- Copilot
@@ -32,6 +34,7 @@ vim.pack.add({
   -- Utilities
   'https://github.com/tpope/vim-eunuch',
   'https://github.com/wakatime/vim-wakatime',
+  'https://github.com/nvim-mini/mini.pick',
 })
 
 -- ============================================================
@@ -87,26 +90,19 @@ vim.keymap.set('v', '<Leader>cc', 'gc', { remap = true, desc = 'Comment selectio
 vim.keymap.set('n', '<Leader>cu', 'gcc', { remap = true, desc = 'Uncomment line' })
 vim.keymap.set('v', '<Leader>cu', 'gc', { remap = true, desc = 'Uncomment selection' })
 
+-- mini.pick mappings
+vim.keymap.set('n', 'ff', ':Pick files<CR>', { desc = 'Pick files' })
+vim.keymap.set('n', 'fg', ':Pick grep_live<CR>', { desc = 'Pick grep live' })
+vim.keymap.set('n', 'fr', ':Pick resume<CR>', { desc = 'Pick resume' })
+
 -- QuickUI menu
 vim.keymap.set('n', '<Space><Space>', ':call quickui#menu#open()<CR>')
 
 -- ============================================================
--- AUTOCOMMANDS
+-- FILETYPE SETTINGS
 -- ============================================================
 
 local augroup = vim.api.nvim_create_augroup('UserConfig', { clear = true })
-
--- Filetype settings
-
-vim.api.nvim_create_autocmd('FileType', {
-  group = augroup,
-  pattern = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact', 'c', 'crystal', 'ecrystal.*' },
-  callback = function()
-    vim.opt_local.shiftwidth = 2
-    vim.opt_local.softtabstop = 2
-    vim.opt_local.expandtab = true
-  end,
-})
 
 vim.api.nvim_create_autocmd('FileType', {
   group = augroup,
@@ -136,8 +132,10 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
   end,
 })
 
+vim.g.c_syntax_for_h = 1
+
 -- ============================================================
--- LSP (Native)
+-- LSP
 -- ============================================================
 
 require("mason").setup()
@@ -146,7 +144,6 @@ require('mason-tool-installer').setup {
   ensure_installed = {
     'clangd',
     'copilot-language-server',
-    'deno',
     'eslint-lsp',
     'lua-language-server',
     'rust-analyzer',
@@ -168,7 +165,7 @@ vim.lsp.config('lua_ls', {
   end
 })
 
--- Native LSP completion
+-- LSP completion
 vim.api.nvim_create_autocmd('LspAttach', {
   group = augroup,
   callback = function(args)
@@ -215,16 +212,40 @@ vim.api.nvim_create_autocmd('BufWritePre', {
 vim.cmd("set completeopt+=noselect")
 
 -- ============================================================
+-- TREESITTER
+-- ============================================================
+
+require 'nvim-treesitter'.install { 'javascript', 'typescript' }
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'javascript', 'typescript', 'typescriptreact', 'javascriptreact' },
+  callback = function() vim.treesitter.start() end,
+})
+
+-- ============================================================
 -- PLUGIN CONFIG
 -- ============================================================
+
+require('mini.pick').setup {
+  mappings = {
+    move_down = '<C-J>',
+    move_up = '<C-K>',
+  },
+}
+
+-- We use copilot through the LSP server
+require("copilot").setup({
+  suggestion = { enabled = false },
+  panel = { enabled = false },
+  filetype = {
+    ["*"] = true,
+  },
+})
 
 -- NERDTree / Ranger
 vim.g.NERDTreeHijackNetrw = 0
 vim.g.ranger_replace_netrw = 1
 vim.g.ranger_command_override = 'ranger --cmd "set show_hidden=true"'
-
--- C syntax
-vim.g.c_syntax_for_h = 1
 
 -- QuickUI menu setup
 vim.g.quickui_border_style = 2
