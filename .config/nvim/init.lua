@@ -35,6 +35,7 @@ vim.pack.add({
   'https://github.com/tpope/vim-eunuch',
   'https://github.com/wakatime/vim-wakatime',
   'https://github.com/nvim-mini/mini.pick',
+  'https://github.com/lewis6991/gitsigns.nvim',
 })
 
 -- ============================================================
@@ -146,6 +147,7 @@ require('mason-tool-installer').setup {
     'copilot-language-server',
     'eslint-lsp',
     'lua-language-server',
+    'rescript-language-server',
     'rust-analyzer',
     'typescript-language-server',
     'zls',
@@ -211,14 +213,17 @@ vim.api.nvim_create_autocmd('BufWritePre', {
 -- Don't select completion item automatically
 vim.cmd("set completeopt+=noselect")
 
+-- Jump to definition
+vim.keymap.set('n', 'gd', vim.lsp.buf.type_definition, { desc = 'Go to definition' })
+
 -- ============================================================
 -- TREESITTER
 -- ============================================================
 
-require('nvim-treesitter').install { 'javascript', 'typescript', 'jsx', 'tsx' }
+require('nvim-treesitter').install { 'javascript', 'typescript', 'jsx', 'tsx', 'rescript' }
 
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = { 'javascript', 'typescript', 'typescriptreact', 'javascriptreact' },
+  pattern = { 'javascript', 'typescript', 'typescriptreact', 'javascriptreact', 'rescript' },
   callback = function() vim.treesitter.start() end,
 })
 
