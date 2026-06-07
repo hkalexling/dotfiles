@@ -1,0 +1,81 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 30,
+    "spacing": 4,
+
+    "modules-left": [
+        "hyprland/workspaces"
+    ],
+    "modules-right": [
+        "network",
+        "disk",
+        "battery",
+        "clock",
+        "custom/local",
+        "custom/utc",
+        "pulseaudio",
+        "backlight",
+        "tray"
+    ],
+
+    "hyprland/workspaces": {
+        "format": "{id}",
+        "disable-scroll": false,
+        "all-outputs": true,
+        "on-click": "activate"
+    },
+    "pulseaudio": {
+        "format": "{volume}% {icon}",
+        "format-muted": "",
+        "format-icons": {
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol"
+    },
+    "backlight": {
+        "device": "intel_backlight",
+        "format": "{percent}% {icon}",
+        "format-icons": ["☀", "☀", "☀"]
+    },
+    "network": {
+        "format-wifi": " {essid}",
+        "format-ethernet": "lan: {ipaddr}",
+        "format-disconnected": "no wlan"
+    },
+    "disk": {
+        "format": "⛁ {free} ({percentage_free}%)",
+        "path": "/"
+    },
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}% ({time})",
+        "format-charging": "⚡ {capacity}%",
+        "format-full": "☻ {capacity}%",
+        "format-icons": ["", "", "", "", ""]
+    },
+    "clock": {
+        "format": "{:%b %d %a}"
+    },
+    "custom/local": {
+        "exec": "~/.config/waybar/local.sh",
+        "interval": 60,
+        "return-type": "json"
+    },
+    "custom/hkt": {
+        "exec": "~/.config/waybar/hkt.sh",
+        "interval": 60,
+        "return-type": "json"
+    },
+    "custom/utc": {
+        "exec": "~/.config/waybar/utc.sh",
+        "interval": 60,
+        "return-type": "json"
+    },
+    "tray": {
+        "spacing": 10
+    }
+}

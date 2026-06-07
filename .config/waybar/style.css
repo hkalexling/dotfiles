@@ -1,0 +1,128 @@
+* {
+    font-family: FontAwesome, DejaVu Sans Mono, Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    border: none;
+    border-radius: 0;
+    min-height: 0;
+}
+
+window#waybar {
+    background-color: #1e2326;
+    color: #d3dae3;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+/* ── Workspaces ────────────────────────────── */
+
+#workspaces {
+    margin: 0 4px;
+}
+
+#workspaces button {
+    padding: 0 6px;
+    background-color: transparent;
+    color: #595b5b;
+}
+
+#workspaces button:hover {
+    background: #353836;
+    box-shadow: none;
+}
+
+#workspaces button.empty {
+    color: #454947;
+}
+
+#workspaces button.active {
+    background-color: #16a085;
+    color: #1e2326;
+}
+
+#workspaces button.urgent {
+    background-color: #e5201d;
+    color: #ffffff;
+}
+
+/* ── Generic module spacing ────────────────── */
+
+#pulseaudio,
+#backlight,
+#network,
+#disk,
+#cpu,
+#memory,
+#temperature,
+#battery,
+#clock,
+#custom-local,
+#custom-hkt,
+#custom-utc,
+#tray {
+    padding: 0 4px;
+}
+
+#pulseaudio { color: #f1c40f; }
+#backlight  { color: #f4d03f; }
+#network    { color: #5dade2; }
+#disk       { color: #58d68d; }
+#memory     { color: #bb8fce; }
+#temperature { color: #eb984e; }
+#battery    { color: #f0b27a; }
+#clock      { color: #ffffff; }
+#custom-local { color: #ffffff; }
+#custom-hkt   { color: #85c1e9; }
+#custom-utc   { color: #abb2b9; }
+#tray       { color: #d3dae3; }
+
+/* ── Battery states ────────────────────────── */
+
+#battery.charging {
+    color: #26a65b;
+}
+
+#battery.critical:not(.charging) {
+    color: #e5201d;
+}
+
+/* ── Network ───────────────────────────────── */
+
+#network.disconnected {
+    color: #e5201d;
+}
+
+/* ── Pulse ─────────────────────────────────── */
+
+#pulseaudio.muted {
+    color: #5d6d7e;
+}
+
+/* ── Temperature ───────────────────────────── */
+
+#temperature.critical {
+    color: #e5201d;
+}
+
+/* ── Tray ──────────────────────────────────── */
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background-color: #e5201d;
+}
+
+/* ── Misc ──────────────────────────────────── */
+
+label:focus {
+    background-color: transparent;
+}
+
+button:hover {
+    background: inherit;
+    box-shadow: none;
+}
