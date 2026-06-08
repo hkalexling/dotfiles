@@ -3,7 +3,7 @@
 choice="$1"
 
 if [[ -z "$choice" ]]; then
-    options="screenshot.sh record-toggle.sh mount.sh conky.sh ocr.sh"
+    options="cpu.sh mount.sh"
     choice=$(echo "$options" | tr -s ' ' '\n' | rofi -dmenu -show run -lines 8 -opacity 85 -bw 0 -width 30 -padding 20 -i -p "Choose a utility script")
 fi
 

@@ -14,8 +14,6 @@
         "clock",
         "custom/local",
         "custom/utc",
-        "pulseaudio",
-        "backlight",
         "tray"
     ],
 
@@ -24,19 +22,6 @@
         "disable-scroll": false,
         "all-outputs": true,
         "on-click": "activate"
-    },
-    "pulseaudio": {
-        "format": "{volume}% {icon}",
-        "format-muted": "",
-        "format-icons": {
-            "default": ["", "", ""]
-        },
-        "on-click": "pavucontrol"
-    },
-    "backlight": {
-        "device": "intel_backlight",
-        "format": "{percent}% {icon}",
-        "format-icons": ["☀", "☀", "☀"]
     },
     "network": {
         "format-wifi": " {essid}",
