@@ -20,6 +20,12 @@ x-scheme-handler/about=chromium.desktop
 x-scheme-handler/unknown=chromium.desktop
 x-scheme-handler/discord-618471189722955807=discord-618471189722955807.desktop
 x-scheme-handler/postman=Postman.desktop
+clash=clash-verge-handler.desktop
+clash-verge=clash-verge-handler.desktop
+x-scheme-handler/clash=clash-verge.desktop
+video/mp4=mpv.desktop
+application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-startcenter.desktop
+x-scheme-handler/slack=slack.desktop
 
 [Added Associations]
 x-scheme-handler/http=chromium.desktop;
@@ -40,3 +46,5 @@ x-scheme-handler/mailto=userapp-Thunderbird.desktop;
 message/rfc822=userapp-Thunderbird.desktop;
 application/pdf=epdfview.desktop;
 application/x-bittorrent=deluge.desktop;
+video/mp4=mpv.desktop;deepin-screen-recorder.desktop;
+application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-startcenter.desktop;

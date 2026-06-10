@@ -1,3 +1,10 @@
+# OPENSPEC:START
+# OpenSpec shell completions configuration
+fpath=("/home/alex_ling/.oh-my-zsh/custom/completions" $fpath)
+autoload -Uz compinit
+compinit
+# OPENSPEC:END
+
 # Path to your oh-my-zsh installation.
 export ZSH="/home/alex_ling/.oh-my-zsh"
 
@@ -84,3 +91,28 @@ export PATH=$PATH:$GOPATH/bin
 
 # vcpkg
 export VCPKG_ROOT=$HOME/Code/vcpkg
+
+export LIBRARY_PATH="/usr/lib:/usr/local/lib:$LIBRARY_PATH"
+export LD_LIBRARY_PATH="/usr/lib:/usr/local/lib:$LD_LIBRARY_PATH"
+export CPATH="/usr/include:/usr/local/include:$CPATH"
+
+[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
+
+
+# BEGIN opam configuration
+# This is useful if you're using opam as it adds:
+#   - the correct directories to the PATH
+#   - auto-completion for the opam binary
+# This section can be safely removed at any time if needed.
+[[ ! -r '/home/alex_ling/.opam/opam-init/init.zsh' ]] || source '/home/alex_ling/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
+# END opam configuration
+
+export PATH=$PATH:~/.local/share/zvm/bin
+
+# pnpm
+export PNPM_HOME="/home/alex_ling/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end

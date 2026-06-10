@@ -24,8 +24,8 @@ vim.pack.add({
   -- Treesitter
   'https://github.com/nvim-treesitter/nvim-treesitter',
 
-  -- Copilot
-  'https://github.com/zbirenbaum/copilot.lua',
+  -- AI Completion
+  'https://github.com/monkoose/neocodeium',
 
   -- Session management
   'https://github.com/dhruvasagar/vim-prosession',
@@ -36,6 +36,7 @@ vim.pack.add({
   'https://github.com/wakatime/vim-wakatime',
   'https://github.com/nvim-mini/mini.pick',
   'https://github.com/lewis6991/gitsigns.nvim',
+  'https://github.com/sindrets/diffview.nvim',
 })
 
 -- ============================================================
@@ -144,7 +145,6 @@ require("mason-lspconfig").setup()
 require('mason-tool-installer').setup {
   ensure_installed = {
     'clangd',
-    'copilot-language-server',
     'eslint-lsp',
     'lua-language-server',
     'rescript-language-server',
@@ -189,16 +189,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
       end
       return '<C-J>'
     end, { expr = true, buffer = bufnr, desc = 'Completion: next item' })
-
-    vim.keymap.set('i', '<Tab>', function()
-      if vim.fn.pumvisible() == 1 then
-        return '<C-y>'
-      end
-      -- Fall back to inline completion accept or regular tab
-      if not vim.lsp.inline_completion.get() then
-        return '<Tab>'
-      end
-    end, { expr = true, buffer = bufnr, desc = 'Completion: confirm / accept inline' })
   end,
 })
 
@@ -220,7 +210,7 @@ vim.keymap.set('n', 'gd', vim.lsp.buf.type_definition, { desc = 'Go to definitio
 -- TREESITTER
 -- ============================================================
 
-require('nvim-treesitter').install { 'javascript', 'typescript', 'jsx', 'tsx', 'rescript' }
+require('nvim-treesitter').install { 'c', 'rust', 'zig', 'javascript', 'typescript', 'jsx', 'tsx', 'rescript', 'markdown', 'lua' }
 
 vim.api.nvim_create_autocmd('FileType', {
   pattern = { 'javascript', 'typescript', 'typescriptreact', 'javascriptreact', 'rescript' },
@@ -238,14 +228,18 @@ require('mini.pick').setup {
   },
 }
 
--- We use copilot through the LSP server
-require("copilot").setup({
-  suggestion = { enabled = false },
-  panel = { enabled = false },
-  filetype = {
-    ["*"] = true,
-  },
-})
+-- NeoCodeium (free AI completion via Windsurf)
+require("neocodeium").setup()
+vim.keymap.set("i", "<Tab>", function()
+  if require("neocodeium").visible() then
+    require("neocodeium").accept()
+    return
+  end
+  if vim.fn.pumvisible() == 1 then
+    return "<C-y>"
+  end
+  return "<Tab>"
+end, { expr = true, desc = "Accept neocodeium / LSP completion / Tab" })
 
 -- NERDTree / Ranger
 vim.g.NERDTreeHijackNetrw = 0
@@ -272,4 +266,12 @@ vim.fn['quickui#menu#install']('&File', {
 vim.fn['quickui#menu#install']('&Tools', {
   { "Spell &Check %{&spell? 'Off' : 'On'}\tF6", 'setlocal spell! spelllang=en_us' },
   { '&NERDTree\t<C-k><C-b>',                    'NERDTreeToggle' },
+})
+
+require("diffview").setup({
+  hooks = {
+    diff_buf_win_enter = function()
+      vim.opt_local.foldenable = false
+    end,
+  },
 })
