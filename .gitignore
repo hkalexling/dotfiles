@@ -1,0 +1,16 @@
+# fcitx5/rime — compiled build artifacts
+.local/share/fcitx5/rime/build/
+
+# fcitx5/rime — LevelDB binary user databases
+.local/share/fcitx5/rime/luna_pinyin.userdb/
+.local/share/fcitx5/rime/clover.userdb/
+
+# fcitx5/rime — sync directory (full typing history, not suitable for public repos)
+.local/share/fcitx5/rime/sync/
+
+# fcitx5 — auto-generated cache
+.config/fcitx5/conf/cached_layouts
+
+# fcitx5 — automatic backups (random suffix)
+.config/fcitx5/conf/*_??????
+.config/fcitx5/profile_??????
