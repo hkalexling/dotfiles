@@ -1,0 +1,133 @@
+{
+  "plugins": {
+    "bclose.vim": {
+      "rev": "99018b4a2dd18aea1cbd3aa23565b01a0f8c5b73",
+      "src": "https://github.com/rbgrouleff/bclose.vim"
+    },
+    "copilot.lua": {
+      "rev": "508d8b00390ff3046323f61187a57069910c6e17",
+      "src": "https://github.com/zbirenbaum/copilot.lua"
+    },
+    "diffview.nvim": {
+      "rev": "4516612fe98ff56ae0415a259ff6361a89419b0a",
+      "src": "https://github.com/sindrets/diffview.nvim"
+    },
+    "gitsigns.nvim": {
+      "rev": "abf82a65f185bd54adc0679f74b7d6e1ada690c9",
+      "src": "https://github.com/lewis6991/gitsigns.nvim"
+    },
+    "goto-preview": {
+      "rev": "cf561d10b4b104db20375c48b86cf36af9f96e00",
+      "src": "https://github.com/rmagatti/goto-preview"
+    },
+    "goyo.vim": {
+      "rev": "fa0263d456dd43f5926484d1c4c7022dfcb21ba9",
+      "src": "https://github.com/junegunn/goyo.vim"
+    },
+    "lalrpop.vim": {
+      "rev": "7073eec8efdeff37cacd4bca378c28dad02c3c14",
+      "src": "https://github.com/qnighy/lalrpop.vim"
+    },
+    "lightline.vim": {
+      "rev": "e358557e1a9f9fc860416c8eb2e34c0404078155",
+      "src": "https://github.com/itchyny/lightline.vim"
+    },
+    "logger.nvim": {
+      "rev": "63dd10c9b9a159fd6cfe08435d9606384ff103c5",
+      "src": "https://github.com/rmagatti/logger.nvim"
+    },
+    "mason-lspconfig.nvim": {
+      "rev": "3b3571b4dadbcb464804466e9872e7246c316af7",
+      "src": "https://github.com/mason-org/mason-lspconfig.nvim"
+    },
+    "mason-tool-installer.nvim": {
+      "rev": "517ef5994ef9d6b738322664d5fdd948f0fdeb46",
+      "src": "https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim"
+    },
+    "mason.nvim": {
+      "rev": "57e5a8addb8c71fb063ee4acda466c7cf6ad2800",
+      "src": "https://github.com/mason-org/mason.nvim"
+    },
+    "mini.pick": {
+      "rev": "6b7974543b17cf2e294993fc3d8545a342258232",
+      "src": "https://github.com/nvim-mini/mini.pick"
+    },
+    "neocodeium": {
+      "rev": "b176a109e37298d9489860b94badbfb2e4677ac2",
+      "src": "https://github.com/monkoose/neocodeium"
+    },
+    "nerdtree": {
+      "rev": "690d061b591525890f1471c6675bcb5bdc8cdff9",
+      "src": "https://github.com/scrooloose/nerdtree"
+    },
+    "nginx.vim": {
+      "rev": "cffaec54f0c7f9518de053634413a20e90eac825",
+      "src": "https://github.com/chr4/nginx.vim"
+    },
+    "nvim-lspconfig": {
+      "rev": "ad95655ec5d13ff7c728d731eb9fd39f34395a03",
+      "src": "https://github.com/neovim/nvim-lspconfig"
+    },
+    "nvim-treesitter": {
+      "rev": "d3218d988f72ed34414959c9ccd802d393432d6e",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter"
+    },
+    "onedark.vim": {
+      "rev": "68dca198f23ef979dc6a123ad50c598902117232",
+      "src": "https://github.com/joshdick/onedark.vim"
+    },
+    "plenary.nvim": {
+      "rev": "b9fd5226c2f76c951fc8ed5923d85e4de065e509",
+      "src": "https://github.com/nvim-lua/plenary.nvim"
+    },
+    "quick-scope": {
+      "rev": "6cee1d9e0b9ac0fbffeb538d4a5ba9f5628fabbc",
+      "src": "https://github.com/unblevable/quick-scope"
+    },
+    "ranger.vim": {
+      "rev": "91e82debdf566dfaf47df3aef0a5fd823cedf41c",
+      "src": "https://github.com/francoiscabrol/ranger.vim"
+    },
+    "rustaceanvim": {
+      "rev": "823d2adfed6e8ba13e6e0dfd5d2e278868557017",
+      "src": "https://github.com/mrcjkb/rustaceanvim"
+    },
+    "telescope.nvim": {
+      "rev": "a0bbec21143c7bc5f8bb02e0005fa0b982edc026",
+      "src": "https://github.com/nvim-telescope/telescope.nvim",
+      "version": "'0.1.8'"
+    },
+    "vim-crystal": {
+      "rev": "dc21188ec8c2ee77bb81dffca02e1a29d87cfd9f",
+      "src": "https://github.com/rhysd/vim-crystal"
+    },
+    "vim-eunuch": {
+      "rev": "e86bb794a1c10a2edac130feb0ea590a00d03f1e",
+      "src": "https://github.com/tpope/vim-eunuch"
+    },
+    "vim-godot": {
+      "rev": "2cecd0c83a7b3f012142a584d53a3a51be246c8e",
+      "src": "https://github.com/habamax/vim-godot"
+    },
+    "vim-obsession": {
+      "rev": "ed9dfc7c2cc917ace8b24f4f9f80a91e05614b63",
+      "src": "https://github.com/tpope/vim-obsession"
+    },
+    "vim-prosession": {
+      "rev": "df3677ac974a08b054915db461bf5fd4599da103",
+      "src": "https://github.com/dhruvasagar/vim-prosession"
+    },
+    "vim-pug": {
+      "rev": "ea39cd942cf3194230cf72bfb838901a5344d3b3",
+      "src": "https://github.com/digitaltoad/vim-pug"
+    },
+    "vim-quickui": {
+      "rev": "2336eee7a246f3bce6de5c9c39f87ac90092bd39",
+      "src": "https://github.com/skywind3000/vim-quickui"
+    },
+    "vim-wakatime": {
+      "rev": "d7973b157a632d1edeff01818f18d67e584eeaff",
+      "src": "https://github.com/wakatime/vim-wakatime"
+    }
+  }
+}
