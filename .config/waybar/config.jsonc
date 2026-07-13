@@ -8,6 +8,7 @@
         "hyprland/workspaces"
     ],
     "modules-right": [
+        "custom/screenrec",
         "network",
         "disk",
         "battery",
@@ -59,6 +60,13 @@
         "exec": "~/.config/waybar/utc.sh",
         "interval": 60,
         "return-type": "json"
+    },
+    "custom/screenrec": {
+        "exec": "~/.config/waybar/screenrec.sh",
+        "interval": 1,
+        "return-type": "json",
+        "on-click": "~/.config/hypr/scripts/record-toggle.sh",
+        "tooltip": true
     },
     "tray": {
         "spacing": 10

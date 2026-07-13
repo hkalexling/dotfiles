@@ -1572,11 +1572,12 @@ window_padding_width 2
 
 #: Color scheme {{{
 
-include ~/.local/share/nvim/site/pack/core/opt/onedark.vim/term/One Dark.kitty
+foreground #e5e9f0
+background #000000
 
 #: The foreground and background colors.
 
-background_opacity 0.8
+background_opacity 0.5
 
 #: The opacity of the terminal background color. A number between zero
 #: and one, where one is opaque and zero is fully transparent. This
@@ -1755,6 +1756,23 @@ dynamic_background_opacity yes
 
 # color7  #dddddd
 # color15 #ffffff
+
+color0  #3b4252
+color1  #bf616a
+color2  #a3be8c
+color3  #ebcb8b
+color4  #81a1c1
+color5  #b48ead
+color6  #88c0d0
+color7  #e5e9f0
+color8  #4c566a
+color9  #bf616a
+color10 #a3be8c
+color11 #ebcb8b
+color12 #81a1c1
+color13 #b48ead
+color14 #8fbcbb
+color15 #eceff4
 
 #: white
 

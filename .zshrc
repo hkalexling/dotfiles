@@ -32,6 +32,20 @@ source $ZSH/oh-my-zsh.sh
 export EDITOR="nvim"
 export VISUAL="nvim"
 
+ranger-cd() {
+    ranger "$@"
+
+    local sentinel="/tmp/ranger-marked-dir"
+    if [ -f "$sentinel" ]; then
+        local dir="$(cat "$sentinel")"
+        rm -f "$sentinel"
+        if [ -d "$dir" ] && [ "$dir" != "$PWD" ]; then
+            cd "$dir"
+        fi
+    fi
+}
+alias ranger='ranger-cd'
+
 # trash
 alias rm='echo "Please use trash instead"; false'
 

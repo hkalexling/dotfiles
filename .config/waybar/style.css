@@ -77,6 +77,18 @@ window#waybar.hidden {
 #custom-utc   { color: #abb2b9; }
 #tray       { color: #d3dae3; }
 
+/* ── Screen recording indicator ───────────── */
+
+#custom-screenrec {
+    padding: 0 8px;
+}
+
+#custom-screenrec.recording {
+    color: #e5201d;
+    font-weight: bold;
+    text-shadow: 0 0 2px #e5201d;
+}
+
 /* ── Battery states ────────────────────────── */
 
 #battery.charging {
