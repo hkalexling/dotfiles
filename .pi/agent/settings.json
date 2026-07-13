@@ -1,0 +1,27 @@
+{
+  "lastChangelogVersion": "0.80.6",
+  "defaultProvider": "opencode-go",
+  "defaultModel": "deepseek-v4-pro",
+  "defaultThinkingLevel": "max",
+  "hideThinkingBlock": false,
+  "theme": "dark",
+  "packages": [
+    {
+      "source": "git:github.com/aliou/pi-neuralwatt",
+      "extensions": [
+        "extensions/provider/index.ts"
+      ]
+    },
+    "https://github.com/wobondar/pi-footer",
+    "https://github.com/dbachelder/pi-btw",
+    "https://github.com/nicobailon/pi-mcp-adapter",
+    "https://github.com/tintinweb/pi-tasks",
+    "npm:@juicesharp/rpiv-ask-user-question",
+    "https://github.com/ygncode/pi-web",
+    "https://github.com/fitchmultz/pi-agent-browser-native"
+  ],
+  "powerline": "default",
+  "compaction": {
+    "enabled": false
+  }
+}

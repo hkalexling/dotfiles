@@ -1,0 +1,33 @@
+{
+  "name": "pi-subagents",
+  "version": "17.2.0-local",
+  "private": true,
+  "type": "module",
+  "description": "Locally-managed fork of @gotgenes/pi-subagents — focused, in-process sub-agent core for pi",
+  "license": "MIT",
+  "imports": {
+    "#src/*": "./src/*",
+    "#test/*": "./test/*"
+  },
+  "pi": {
+    "extensions": [
+      "./src/index.ts"
+    ]
+  },
+  "scripts": {
+    "check": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@sinclair/typebox": "^0.34.49"
+  },
+  "devDependencies": {
+    "@earendil-works/pi-ai": "^0.79.9",
+    "@earendil-works/pi-coding-agent": "^0.79.9",
+    "@earendil-works/pi-tui": "^0.79.9",
+    "@types/node": "^22.15.3",
+    "typescript": "^5.7.0",
+    "vitest": "^4.1.9"
+  }
+}

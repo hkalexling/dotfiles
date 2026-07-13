@@ -1,0 +1,6 @@
+{
+  "app.thinking.cycle": ["ctrl+t"],
+  "app.thinking.toggle": [],
+  "app.editor.external": ["ctrl+e"],
+  "app.model.cycleForward": []
+}

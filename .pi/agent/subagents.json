@@ -1,0 +1,8 @@
+{
+  "maxConcurrent": 8,
+  "defaultMaxTurns": 0,
+  "graceTurns": 5,
+  "defaultModel": "deepseek/deepseek-v4-pro",
+  "defaultThinking": "high",
+  "agents": {}
+}

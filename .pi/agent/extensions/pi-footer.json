@@ -1,0 +1,137 @@
+{
+  "version": 1,
+  "enabled": true,
+  "preset": "pi-footer",
+  "lines": [
+    [
+      {
+        "id": "cwd-basename-mqltyp9m-bxfb74",
+        "type": "cwd-basename",
+        "enabled": true,
+        "options": {
+          "raw": false,
+          "hideWhenEmpty": false,
+          "icon": "",
+          "text": "",
+          "fg": "blue",
+          "bg": "default",
+          "bold": false
+        }
+      },
+      {
+        "id": "git-branch-mqlu0y0v-j262qc",
+        "type": "git-branch",
+        "enabled": true,
+        "options": {
+          "raw": false,
+          "hideWhenEmpty": true,
+          "icon": "",
+          "text": "",
+          "fg": "magenta",
+          "bg": "default",
+          "bold": false,
+          "gitBranchDisplayStyle": "default",
+          "surroundLeft": "",
+          "surroundRight": ""
+        }
+      },
+      {
+        "id": "context-length-mqltql7v-rbww07",
+        "type": "context-length",
+        "enabled": true,
+        "options": {
+          "raw": false,
+          "hideWhenZero": false,
+          "icon": "",
+          "fg": "brightBlack",
+          "bg": "default",
+          "bold": false,
+          "tokenFormatStyle": "compact",
+          "contextConditionalColors": false,
+          "contextWarningPercent": 70,
+          "contextDangerPercent": 90,
+          "warningFg": "yellow",
+          "warningBg": "default",
+          "dangerFg": "red",
+          "dangerBg": "default"
+        }
+      },
+      {
+        "id": "context-window-mqltpjsh-tgd246",
+        "type": "context-window",
+        "enabled": true,
+        "options": {
+          "raw": false,
+          "hideWhenZero": false,
+          "icon": "",
+          "fg": "pi:dim",
+          "bg": "default",
+          "bold": false,
+          "tokenFormatStyle": "compact",
+          "contextConditionalColors": false,
+          "contextWarningPercent": 70,
+          "contextDangerPercent": 90,
+          "warningFg": "pi:warning",
+          "warningBg": "default",
+          "dangerFg": "pi:error",
+          "dangerBg": "default"
+        }
+      },
+      {
+        "id": "flex-separator-mqltpjsh-os0u41",
+        "type": "flex-separator",
+        "enabled": true,
+        "options": {
+          "fg": "default",
+          "bg": "default",
+          "bold": false,
+          "hideWhenEmpty": true
+        }
+      },
+      {
+        "id": "model-mqltpjsh-ltkylz",
+        "type": "model",
+        "enabled": true,
+        "options": {
+          "raw": true,
+          "icon": "",
+          "fg": "pi:dim",
+          "bg": "default",
+          "bold": false,
+          "showProvider": true
+        }
+      },
+      {
+        "id": "thinking-level-mqltpjsh-vqjksp",
+        "type": "thinking-level",
+        "enabled": true,
+        "options": {
+          "raw": true,
+          "hideWhenEmpty": true,
+          "icon": "",
+          "text": "",
+          "fg": "pi:dim",
+          "bg": "default",
+          "bold": false
+        }
+      }
+    ]
+  ],
+  "separator": "space",
+  "separatorFg": "default",
+  "separatorBg": "default",
+  "iconMode": "nerd",
+  "minimalist": false,
+  "terminal": {
+    "widthMode": "full",
+    "colorLevel": "ansi256"
+  },
+  "extensionStatusRow": {
+    "hiddenKeys": [
+      "mcp"
+    ],
+    "knownKeys": [
+      "mcp"
+    ]
+  }
+}

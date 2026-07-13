@@ -1,0 +1,12 @@
+{
+  "snippets": [
+    {
+      "label": "plan only",
+      "text": "\nDO NOT make any code changes yet, but do all you need to do before that point - do any reading/searching/exploration needed, instead of deferring these to the time of implementation. Take your time and be resourceful, and when you are ready present me the plan.\n"
+    },
+    {
+      "label": "ground",
+      "text": "\nGround your understanding to the actual codebase and not just the docs.\n"
+    }
+  ]
+}
