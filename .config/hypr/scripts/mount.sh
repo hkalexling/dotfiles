@@ -1,6 +1,6 @@
 #!/bin/bash
 
-all="$(lsblk -rpo "label,name,type,size,mountpoint" | grep -v 'mmcblk1' | awk '$3=="part"{if($5==""){printf "%s: %s (%s)\n",$1,$2,$4}else{printf "%s: %s (%s, mounted)\n",$1,$2,$4}}')"
+all="$(lsblk -Ppo "name,label,type,size,mountpoint" | grep -v 'mmcblk1' | awk -F'"' '$6=="part"{if($10==""){printf "%s: %s (%s)\n",$4,$2,$8}else{printf "%s: %s (%s, mounted at %s)\n",$4,$2,$8,$10}}')"
 
 get_mountpoint(){ \
 	echo "$(lsblk -rpo "name,type,mountpoint" | awk -v name="$1" '$1==name&&$2=="part"{printf $3}')"
@@ -37,19 +37,19 @@ action=$(echo -e $actions | rofi -dmenu -show run -lines 5 -opacity "85" -bw 0 -
 err=""
 case "$action" in
 	mount)
-		err="$(udisksctl mount --no-user-interaction -b "$chosen" 2>&1 1>/dev/null)"
+		err="$(udisksctl mount -b "$chosen" 2>&1 1>/dev/null)"
 		;;
 	unmount)
-		err="$(udisksctl unmount --no-user-interaction -b "$chosen" 2>&1 1>/dev/null)"
+		err="$(udisksctl unmount -b "$chosen" 2>&1 1>/dev/null)"
 		;;
 	eject)
-        udisksctl unmount --no-user-interaction -b "$chosen"
-		err="$(udisksctl power-off --no-user-interaction -b "$chosen" 2>&1 1>/dev/null)"
+        udisksctl unmount -b "$chosen"
+		err="$(udisksctl power-off -b "$chosen" 2>&1 1>/dev/null)"
 		;;
 	open)
 		mp="$(get_mountpoint "$chosen")"
 		if [ -z "$mp" ]; then
-			err="$(udisksctl mount --no-user-interaction -b "$chosen" 2>&1 1>/dev/null)"
+			err="$(udisksctl mount -b "$chosen" 2>&1 1>/dev/null)"
 			if [ -z "$err" ]; then
 				notify-send "${chosen} mounted"
 			else
