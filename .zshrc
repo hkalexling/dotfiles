@@ -27,6 +27,11 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
+# Change hostname color when connected via SSH
+if [[ -n "$SSH_TTY" ]]; then
+  PROMPT="${PROMPT//38;5;033m/38;5;201m}"  # cyan → magenta
+fi
+
 # User configuration
 
 export EDITOR="nvim"
