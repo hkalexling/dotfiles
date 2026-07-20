@@ -80,8 +80,10 @@ hl.on("hyprland.start", function()
   hl.exec_cmd("fcitx5")
   hl.exec_cmd("hypridle")
   hl.exec_cmd("swayosd-server")
-  hl.exec_cmd("conky -c ~/.config/hypr/conky")
+  -- Keep Conky in a dedicated user service so it cannot delay system shutdown.
+  hl.exec_cmd("systemctl --user start conky.service")
   hl.exec_cmd("gsr-ui")
+  hl.exec_cmd("steam -silent")
 end)
 
 -- ── Keybinds ─────────────────────────────────────────────────────────────────
@@ -103,6 +105,7 @@ hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"))
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + SPACE", hl.dsp.window.float())
 hl.bind(mainMod .. " + SHIFT + SPACE", hl.dsp.window.pin())
+hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
 
 -- Screenshots & recording
 hl.bind("Print", hl.dsp.exec_cmd("~/.config/hypr/scripts/screenshot.sh"))
