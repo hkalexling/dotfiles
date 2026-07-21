@@ -5,7 +5,8 @@
     "spacing": 4,
 
     "modules-left": [
-        "hyprland/workspaces"
+        "hyprland/workspaces",
+        "hyprland/submap"
     ],
     "modules-right": [
         "custom/screenrec",
@@ -23,6 +24,11 @@
         "disable-scroll": false,
         "all-outputs": true,
         "on-click": "activate"
+    },
+    "hyprland/submap": {
+        "format": "MODE: {}",
+        "always-on": false,
+        "tooltip": false
     },
     "network": {
         "format-wifi": " {essid}",

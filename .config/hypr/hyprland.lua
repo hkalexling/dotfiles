@@ -153,3 +153,9 @@ for i = 1, 12 do
   hl.bind(mainMod .. " + F" .. i, hl.dsp.focus({ workspace = ws }))
   hl.bind(mainMod .. " + SHIFT + F" .. i, hl.dsp.window.move({ workspace = ws, follow = false }))
 end
+
+-- Passthrough mode
+hl.bind(mainMod .. " + R", hl.dsp.submap("passthrough"))
+hl.define_submap("passthrough", function()
+  hl.bind(mainMod .. " + escape", hl.dsp.submap("reset"))
+end)

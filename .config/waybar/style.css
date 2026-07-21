@@ -46,6 +46,24 @@ window#waybar.hidden {
     color: #ffffff;
 }
 
+/* ── Submap indicator ─────────────────────── */
+
+#submap {
+    margin: 3px 4px;
+    padding: 0 8px;
+    border-radius: 3px;
+    background-color: #353836;
+    color: #d3dae3;
+    font-weight: bold;
+}
+
+#submap.passthrough {
+    padding: 0 10px;
+    background-color: #e5201d;
+    color: #ffffff;
+    text-shadow: 0 0 2px #ffffff;
+}
+
 /* ── Generic module spacing ────────────────── */
 
 #pulseaudio,
