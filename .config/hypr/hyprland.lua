@@ -30,10 +30,11 @@ hl.config({
 -- ── Monitor ──────────────────────────────────────────────────────────────────
 
 hl.monitor({
-  output   = "",
-  mode     = "preferred",
-  position = "auto",
-  scale    = 1.25,
+  output = "",
+  scale  = 1.25,
+  -- cm            = "hdr",
+  -- sdrbrightness = 3.0,
+  -- sdrsaturation = 1.25,
 })
 
 -- ── Environment ──────────────────────────────────────────────────────────────
@@ -73,7 +74,7 @@ hl.gesture({
 -- ── Autostart ────────────────────────────────────────────────────────────────
 
 hl.on("hyprland.start", function()
-  hl.exec_cmd("systemctl --user reset-failed hyprpolkitagent && systemctl --user start hyprpolkitagent")
+  hl.exec_cmd("exec /usr/lib/hyprpolkitagent/hyprpolkitagent")
   hl.exec_cmd("waybar")
   hl.exec_cmd("hyprpaper")
   hl.exec_cmd("nm-applet")
@@ -84,6 +85,7 @@ hl.on("hyprland.start", function()
   hl.exec_cmd("systemctl --user start conky.service")
   hl.exec_cmd("gsr-ui")
   hl.exec_cmd("steam -silent")
+  hl.exec_cmd("openrgb --profile disabled")
 end)
 
 -- ── Keybinds ─────────────────────────────────────────────────────────────────
@@ -100,7 +102,7 @@ hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("swayosd-client --brightness lo
 
 -- Apps
 hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd("kitty"))
-hl.bind(mainMod .. " + CONTROL + RETURN", hl.dsp.exec_raw("BROWSER=/usr/bin/chromium chromium"))
+hl.bind(mainMod .. " + CONTROL + RETURN", hl.dsp.exec_raw("BROWSER=/usr/bin/chromium chromium --test-type"))
 hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"))
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + SPACE", hl.dsp.window.float())
