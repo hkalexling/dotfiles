@@ -123,14 +123,16 @@ export CPATH="/usr/include:/usr/local/include:$CPATH"
 # This section can be safely removed at any time if needed.
 [[ ! -r '/home/alex_ling/.opam/opam-init/init.zsh' ]] || source '/home/alex_ling/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
 # END opam configuration
+#
+export PIP_REQUIRE_VIRTUALENV=true
 
 export PATH=$PATH:~/.local/share/zvm/bin
 
 # pnpm
 export PNPM_HOME="/home/alex_ling/.local/share/pnpm"
 case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
 esac
 # pnpm end
 

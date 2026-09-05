@@ -2,7 +2,7 @@
   "maxConcurrent": 8,
   "defaultMaxTurns": 0,
   "graceTurns": 5,
-  "defaultModel": "deepseek/deepseek-v4-pro",
+  "defaultModel": "opencode-go/muse-spark-1.2-contributor",
   "defaultThinking": "high",
   "agents": {}
 }
