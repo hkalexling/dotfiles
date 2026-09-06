@@ -69,6 +69,7 @@ window#waybar.hidden {
 #pulseaudio,
 #backlight,
 #network,
+#custom-tailscale-exit,
 #disk,
 #cpu,
 #memory,
@@ -93,6 +94,8 @@ window#waybar.hidden {
 #custom-local { color: #ffffff; }
 #custom-hkt   { color: #85c1e9; }
 #custom-utc   { color: #abb2b9; }
+#custom-tailscale-exit { color: #ff79c6; }
+#custom-tailscale-exit.offline { color: #e5201d; }
 #tray       { color: #d3dae3; }
 
 /* ── Screen recording indicator ───────────── */
