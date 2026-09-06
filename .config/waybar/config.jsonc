@@ -11,6 +11,7 @@
     "modules-right": [
         "custom/screenrec",
         "network",
+        "custom/tailscale-exit",
         "disk",
         "battery",
         "clock",
@@ -73,6 +74,13 @@
         "return-type": "json",
         "on-click": "~/.config/hypr/scripts/record-toggle.sh",
         "tooltip": true
+    },
+    "custom/tailscale-exit": {
+        "exec": "~/.config/waybar/tailscale-exit.sh",
+        "interval": 5,
+        "return-type": "json",
+        "tooltip": true,
+        "on-click": "tailscale exit-node list"
     },
     "tray": {
         "spacing": 10
