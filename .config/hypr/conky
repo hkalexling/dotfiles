@@ -12,8 +12,8 @@ conky.config = {
 	minimum_width = 200,
 	no_buffers = true,
 	own_window = true,
-	own_window_type = 'desktop',
-	own_window_transparent = true,
+	own_window_type = 'override',
+	own_window_colour = '#00000000',
 	update_interval = 3.0,
 	use_xft = true,
 }
