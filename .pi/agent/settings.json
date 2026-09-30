@@ -1,13 +1,11 @@
 {
-  "lastChangelogVersion": "0.85.1",
+  "lastChangelogVersion": "0.99.1",
   "defaultProvider": "opencode-go",
-  "defaultModel": "deepseek-v4-pro",
+  "defaultModel": "deepseek-v4.1-flash",
   "defaultThinkingLevel": "max",
   "hideThinkingBlock": false,
-  "theme": "dark",
+  "theme": "dark-legacy",
   "packages": [
-    "https://github.com/tintinweb/pi-tasks",
-    "npm:@juicesharp/rpiv-ask-user-question",
     "https://github.com/fitchmultz/pi-agent-browser-native",
     "https://github.com/aliou/pi-neuralwatt",
     "npm:pi-footer",
