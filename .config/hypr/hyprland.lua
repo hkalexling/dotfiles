@@ -102,7 +102,7 @@ hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("swayosd-client --brightness lo
 
 -- Apps
 hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd("kitty"))
-hl.bind(mainMod .. " + CONTROL + RETURN", hl.dsp.exec_raw("BROWSER=/usr/bin/chromium chromium --test-type"))
+hl.bind(mainMod .. " + CONTROL + RETURN", hl.dsp.exec_cmd("tmux-browser"))
 hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"))
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + SPACE", hl.dsp.window.float())

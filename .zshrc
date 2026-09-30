@@ -94,7 +94,7 @@ alias ls='lsd'
 
 alias copy='xclip -sel clip'
 
-export BROWSER=/usr/bin/chromium
+export BROWSER=tmux-browser
 
 # system level yadm to manage files in /etc. See https://yadm.io/docs/faq#unconventional-cases
 alias sysyadm="sudo yadm --yadm-dir /etc/yadm --yadm-data /etc/yadm/data"
@@ -135,6 +135,8 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME/bin:$PATH" ;;
 esac
 # pnpm end
+
+export PATH=$PATH:~/.local/bin
 
 # plugin from https://archlinux.org/packages/extra/any/zsh-syntax-highlighting/
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
