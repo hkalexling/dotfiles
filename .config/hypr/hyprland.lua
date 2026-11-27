@@ -39,8 +39,16 @@ hl.on("hyprland.start", function()
   hl.exec_cmd("fcitx5")
   hl.exec_cmd("hypridle")
   hl.exec_cmd("swayosd-server")
-  hl.exec_cmd('conky -c "' .. configHome .. '/hypr/conky"')
+  hl.exec_cmd("systemctl --user import-environment WAYLAND_DISPLAY HYPRLAND_INSTANCE_SIGNATURE"
+    .. " && systemctl --user restart nano-sysmon.service")
 end)
+
+-- Reattach the layer surface on dock/undock, after outputs have settled.
+for _, event in ipairs({ "monitor.added", "monitor.removed" }) do
+  hl.on(event, function()
+    hl.exec_cmd("sleep 1; systemctl --user try-restart nano-sysmon.service")
+  end)
+end
 
 local function bind(key, dispatcher, opts)
   hl.bind(mainMod .. " + " .. key, dispatcher, opts)

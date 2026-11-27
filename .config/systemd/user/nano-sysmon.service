@@ -1,0 +1,11 @@
+[Unit]
+Description=Nano desktop system monitor (Eww)
+
+[Service]
+Type=simple
+Environment="NANO_SYSMON_CONFIG=%E/eww"
+ExecStart=%h/.local/bin/eww -c %E/eww --force-wayland --no-daemonize daemon
+ExecStartPost=%E/eww/scripts/open-widget.sh
+Restart=on-failure
+RestartSec=2s
+TimeoutStopSec=5s
