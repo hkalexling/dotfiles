@@ -12,7 +12,7 @@ choice=$(echo -e "$options" | rofi -dmenu -show run -lines 4 -opacity 85 -bw 0 -
 [ "$choice" ] || exit
 
 case $choice in
-    logout)   hyprctl dispatch exit ;;
+    logout)   hyprctl dispatch 'hl.dsp.exit()' ;;
     suspend)  systemctl suspend ;;
     hibernate) systemctl hibernate ;;
     shutdown) systemctl poweroff ;;
