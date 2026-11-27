@@ -1,0 +1,9 @@
+{
+  "place": "none",
+  "title": "Dictation",
+  "overlay": { "kind": "popup", "at": "top", "offset": 60, "width": 460 },
+  "palette": [
+    { "title": "Dictate into terminal", "command": "mod.open", "args": { "name": "dictation" }, "group": "Terminal", "words": "dictation voice speech whisper microphone talk" },
+    { "title": "Dictation settings", "command": "mod.open", "args": { "name": "dictation-settings" }, "group": "App", "words": "dictation openai api key microphone voice whisper" }
+  ]
+}

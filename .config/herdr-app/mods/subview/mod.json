@@ -1,0 +1,11 @@
+{
+  "place": "none",
+  "size": 30,
+  "title": "Subscription limits",
+  "overlay": {
+    "kind": "window",
+    "key": "subview",
+    "width": 460,
+    "height": 0.7
+  }
+}
