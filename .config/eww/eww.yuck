@@ -49,8 +49,7 @@
 ;; window
 ;; --------------------------------------------------------------------------
 (defwindow sysmon
-  ;; Prefer the external display when docked and the built-in panel otherwise.
-  :monitor '["Mi Monitor", "eDP-1", 0]'
+  ;; The startup script opens one instance per active display.
   :geometry (geometry :x "35px" :y "35px" :width "158px" :anchor "top right")
   :stacking "bottom"
   :focusable false
