@@ -1,0 +1,9 @@
+{
+  "name": "session-autocompact",
+  "private": true,
+  "type": "module",
+  "description": "Session-scoped opt-in for Pi's native auto-compaction scheduler: /autocompact on [tokens]|off|limit <tokens>|status without writing global settings",
+  "scripts": {
+    "test": "node --test test/*.test.ts"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "self-compaction",
+  "private": true,
+  "type": "module",
+  "description": "Model-facing self_compact tool: navigate the session tree + optional branch summary, driven in-process after the turn settles",
+  "scripts": {
+    "test": "node --test test/*.test.ts"
+  }
+}

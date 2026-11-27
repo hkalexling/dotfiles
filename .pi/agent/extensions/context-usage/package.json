@@ -1,0 +1,9 @@
+{
+  "name": "context-usage",
+  "private": true,
+  "type": "module",
+  "description": "Model-facing context_usage tool: current context tokens, window, and percent",
+  "scripts": {
+    "test": "node --test test/*.test.ts"
+  }
+}
