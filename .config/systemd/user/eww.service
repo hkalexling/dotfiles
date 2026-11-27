@@ -1,0 +1,18 @@
+[Unit]
+Description=eww widgets (desktop system monitor)
+# Replaces the old conky.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/eww --force-wayland --no-daemonize daemon
+# Waits for the IPC socket, then opens the "sysmon" window.
+ExecStartPost=%h/.config/eww/scripts/open-widget.sh
+Restart=on-failure
+RestartSec=2s
+# The daemon owns the layer-shell surfaces; take the whole cgroup down together
+# so no widget can outlive the service at logout/shutdown.
+KillMode=control-group
+TimeoutStopSec=5s
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,132 @@
+/* Styling for the sysmon widget - mirrors the old conky colours:
+   default text #F9FAF9, accent #5D7B86, transparent window.
+   NOTE: keep this file pure ASCII. A non-ASCII byte makes the SCSS compiler
+   prepend an @charset rule, which eww's CSS parser rejects, killing all styles. */
+
+* {
+  font-family: "DejaVu Sans";
+  font-size: 11px;
+  color: #F9FAF9;
+  text-shadow: none;
+  box-shadow: none;
+}
+
+window {
+  background-color: transparent;
+}
+
+.root {
+  padding: 0 13px 0 40px;
+  /* GTK CSS min-width is the reliable way to pin the content column width:
+     the yuck :width prop is only a hint and gets ignored/overridden. */
+  min-width: 158px;
+}
+
+/* ----------------------------------------------------------------- header -- */
+.dayname {
+  color: #5D7B86;
+  font-size: 21px;
+  margin-bottom: -2px;
+}
+
+.month {
+  font-size: 24px;
+}
+
+.year {
+  font-size: 27px;
+}
+
+/* the big date has no descenders, so nudge it to optically align with the
+   month/year block the way the conky layout did */
+.daynum {
+  font-size: 51px;
+  margin-bottom: -6px;
+}
+
+.hr {
+  background-color: #5D7B86;
+  min-height: 1px;
+  margin-top: 2px;
+}
+
+/* ---------------------------------------------------------------- sections -- */
+.section {
+  margin-top: 10px;
+}
+
+.row {
+  min-height: 15px;
+}
+
+.header .label {
+  font-weight: bold;
+}
+
+.proc .label {
+  color: #5D7B86;
+}
+
+.value {
+  font-weight: bold;
+}
+
+/* ---------------------------------------------------------------- progress -- */
+/* Both bars are exactly the same length: the name column is a fixed 34px, the
+   value column a fixed 45px (wide enough for bold "336GiB"), and the bar fills
+   whatever is left. Values stay flush right like every other row; the shorter
+   VRAM value just has some padding before it, as a right-aligned number column
+   normally does.
+   NOTE: min-width must go on the wrapper, not the label - a widened label has
+   its text centred by GTK, which would indent "Disk" relative to "VRAM"/
+   "Swap". The wrapper keeps the label at natural width, flush left.
+   The 38px fits the widest bold name ("VRAM", 37px) - the bar rows use the
+   header class so their names match CPU/RAM/Swap in weight. */
+.bar-name {
+  min-width: 38px;
+}
+
+.bar {
+  min-width: 44px;
+  /* right margin keeps a little air between the trough and the number */
+  margin: 0 6px 0 4px;
+}
+
+.bar-value {
+  min-width: 45px;
+}
+
+/* The track uses the accent colour (like the hr rule and the proc labels);
+   the fill is the same off-white as the data text. The child combinators are
+   deliberate: `progressbar progress` alone loses to the theme's
+   `progressbar > trough > progress`, whose coloured border showed up as a
+   blue fringe around the fill (very visible on the tiny VRAM bar). */
+progressbar > trough {
+  background-color: transparent;
+  background-image: none;
+  border: 1px solid #5D7B86;
+  border-radius: 0;
+  min-width: 40px;
+  min-height: 5px;
+}
+
+progressbar > trough > progress {
+  background-color: #F9FAF9;
+  background-image: none;
+  border: none;
+  border-radius: 0;
+  min-height: 5px;
+}
+
+/* ------------------------------------------------------------------ footer -- */
+.footer {
+  margin-top: 12px;
+}
+
+.footerline .fkey {
+  color: #5D7B86;
+}
+
+.footerline .fval {
+  color: #F9FAF9;
+}

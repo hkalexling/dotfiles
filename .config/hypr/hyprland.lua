@@ -74,18 +74,36 @@ hl.gesture({
 -- ── Autostart ────────────────────────────────────────────────────────────────
 
 hl.on("hyprland.start", function()
+  -- Screen sharing repair. Login services can D-Bus-activate xdg-desktop-portal
+  -- before Hyprland publishes XDG_CURRENT_DESKTOP/WAYLAND_DISPLAY to systemd, in
+  -- which case the portal resolves every interface to the GTK fallback and never
+  -- registers org.freedesktop.portal.ScreenCast (empty Chrome picker, Firefox
+  -- "needs permission to screen share"). The script exits immediately when the
+  -- session came up correctly; see ~/.config/hypr/scripts/portal-fix.sh.
+  hl.exec_cmd("~/.config/hypr/scripts/portal-fix.sh")
   hl.exec_cmd("exec /usr/lib/hyprpolkitagent/hyprpolkitagent")
   hl.exec_cmd("waybar")
   hl.exec_cmd("hyprpaper")
   hl.exec_cmd("nm-applet")
   hl.exec_cmd("fcitx5")
-  hl.exec_cmd("hypridle")
   hl.exec_cmd("swayosd-server")
-  -- Keep Conky in a dedicated user service so it cannot delay system shutdown.
-  hl.exec_cmd("systemctl --user start conky.service")
+  -- Desktop system monitor, in a dedicated user service so it cannot delay
+  -- system shutdown. (Replaced conky; see ~/.config/eww/)
+  hl.exec_cmd("systemctl --user start eww.service")
   hl.exec_cmd("gsr-ui")
   hl.exec_cmd("steam -silent")
   hl.exec_cmd("openrgb --profile disabled")
+end)
+
+-- ── eww recovery ─────────────────────────────────────────────────────────────
+-- When the monitor's DP link drops (power save / power cycle), Hyprland
+-- removes and re-adds the output, which closes the eww layer surface.
+-- gtk-layer-shell ignores that "closed" event for configured surfaces, so
+-- eww keeps reporting the window as open while nothing is drawn. Recreate it
+-- once the output is back. The ping guard skips the boot-time monitor.added,
+-- which fires before eww.service is up.
+hl.on("monitor.added", function()
+  hl.exec_cmd("sleep 1; eww ping >/dev/null 2>&1 && { eww close sysmon 2>/dev/null; eww open sysmon; }")
 end)
 
 -- ── Keybinds ─────────────────────────────────────────────────────────────────
@@ -102,7 +120,7 @@ hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("swayosd-client --brightness lo
 
 -- Apps
 hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd("kitty"))
-hl.bind(mainMod .. " + CONTROL + RETURN", hl.dsp.exec_cmd("tmux-browser"))
+hl.bind(mainMod .. " + CONTROL + RETURN", hl.dsp.exec_cmd("tmux-browser --remote-debugging-port=9222"))
 hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"))
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + SPACE", hl.dsp.window.float())

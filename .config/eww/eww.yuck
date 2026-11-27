@@ -1,0 +1,87 @@
+;; eww config for the top-right desktop system monitor.
+;; Replaces ~/.config/hypr/conky (same layout, colours and data).
+;;
+;; NOTE: every box sets :space-evenly false. In this eww build the default is
+;; to hand every child an equal share of the space, which stretches rows apart.
+
+(defpoll stats
+  :interval "2s"
+  :initial '{"cpu":{"pct":"0%","top":[]},"mem":{"used":"--","top":[]},"swap":{"used":"--","free":"--"},"vram":{"pct":0,"text":"--"},"disk":{"pct":0,"used":"--"},"uptime":"--","kernel":"--"}'
+  "/home/alex_ling/.config/eww/scripts/stats.py")
+
+;; --------------------------------------------------------------------------
+;; row widgets
+;; --------------------------------------------------------------------------
+(defwidget hrow [?name ?value]
+  (box :orientation "h" :space-evenly false :class "row header"
+    (label :class "label" :text name :halign "start" :hexpand true)
+    (label :class "value" :text value :halign "end")))
+
+(defwidget prow [?name ?value]
+  (box :orientation "h" :space-evenly false :class "row proc"
+    (label :class "label" :text name :halign "start" :hexpand true :limit-width 17)
+    (label :class "value" :text value :halign "end")))
+
+;; NOTE: the two bar rows need extra alignment props:
+;;   * progress valign=center - GTK otherwise draws the bar at the bottom of
+;;     the row instead of centred on the row text.
+;;   * progress hexpand - the bar fills the space between the fixed-width name
+;;     column and the fixed-width value column, so both troughs are exactly
+;;     the same length and line up.
+;;   * the name sits in a fixed-width wrapper (bar-name, scss) with the label
+;;     left as natural width, so its text starts at the left edge shared with
+;;     CPU/RAM/Swap. A CSS min-width on the label itself widens the widget and
+;;     GTK centres the text (xalign default), indenting shorter names like
+;;     "Disk".
+(defwidget barrow [?name ?value ?bar]
+  (box :orientation "h" :space-evenly false :class "row header bar-row"
+    (box :orientation "h" :space-evenly false :class "bar-name"
+      (label :class "label" :text name :halign "start"))
+    (progress :class "bar" :value bar :valign "center" :hexpand true)
+    (label :class "value bar-value" :text value :halign "end" :xalign 1)))
+
+(defwidget footerline [?key ?value]
+  (box :orientation "h" :space-evenly false :class "footerline" :halign "end"
+    (label :class "fkey" :text key)
+    (label :class "fval" :text value)))
+
+;; --------------------------------------------------------------------------
+;; window
+;; --------------------------------------------------------------------------
+(defwindow sysmon
+  :monitor '["Mi Monitor", 0]'
+  :geometry (geometry :x "35px" :y "35px" :width "158px" :anchor "top right")
+  :stacking "bottom"
+  :focusable false
+  (box :orientation "v" :space-evenly false :class "root" :width 158
+    (label :class "dayname" :text {formattime(EWW_TIME, "%A")})
+    (box :orientation "h" :space-evenly false :class "datebox"
+      (box :orientation "v" :space-evenly false :class "monthyear" :valign "end"
+        (label :class "month" :text {formattime(EWW_TIME, "%b")})
+        (label :class "year" :text {formattime(EWW_TIME, "%Y")}))
+      (label :class "daynum" :halign "end" :hexpand true :valign "end"
+             :text {replace(formattime(EWW_TIME, "%e"), " ", "")}))
+    (box :class "hr" :height 1)
+
+    (box :orientation "v" :space-evenly false :class "section"
+      (hrow :name "CPU" :value {stats.cpu.pct})
+      (for p in {stats.cpu.top}
+        (prow :name {p.n} :value {p.v})))
+
+    (box :orientation "v" :space-evenly false :class "section"
+      (hrow :name "RAM" :value {stats.mem.used})
+      (for p in {stats.mem.top}
+        (prow :name {p.n} :value {p.v})))
+
+    (box :orientation "v" :space-evenly false :class "section"
+      (hrow :name "Swap" :value "${stats.swap.used}/ ${stats.swap.free}"))
+
+    (box :orientation "v" :space-evenly false :class "section"
+      (barrow :name "VRAM" :value {stats.vram.text} :bar {stats.vram.pct}))
+
+    (box :orientation "v" :space-evenly false :class "section"
+      (barrow :name "Disk" :value {stats.disk.used} :bar {stats.disk.pct}))
+
+    (box :orientation "v" :space-evenly false :class "footer"
+      (footerline :key "Uptime: " :value {stats.uptime})
+      (footerline :key "Kernel: " :value {stats.kernel}))))
