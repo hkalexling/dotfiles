@@ -1,0 +1,270 @@
+diff --git a/src/claude-cli.ts b/src/claude-cli.ts
+index b883a3fd7d9d28f7f7d106801e6f961e6bcf96ee..50082bb7f65a8b44e066a4ad813826390e1ecd36 100644
+--- a/src/claude-cli.ts
++++ b/src/claude-cli.ts
+@@ -754,7 +754,7 @@ function isImageScaleNote(block: unknown): boolean {
+ function alignCanonicalContent(canonical: unknown[], wire: unknown[], where: string): unknown[] {
+   const output: unknown[] = [];
+   let cursor = 0;
+-  for (const block of canonical) {
++  for (const [position, block] of canonical.entries()) {
+     if (!isBlock(block)) throw new Error(`Claude Code request has an invalid canonical block in ${where}`);
+     const index = wire.findIndex(
+       (candidate, position) =>
+@@ -769,7 +769,11 @@ function alignCanonicalContent(canonical: unknown[], wire: unknown[], where: str
+ 
+     if (block.type === "image") {
+       output.push(withoutCacheControl(native));
+-      if (isImageScaleNote(wire[cursor])) output.push(withoutCacheControl(wire[cursor++]));
++      // A tool may already carry the note in Pi's history (local patch, issue #71);
++      // then the canonical note claims the wire copy itself.
++      if (isImageScaleNote(wire[cursor]) && !isImageScaleNote(canonical[position + 1])) {
++        output.push(withoutCacheControl(wire[cursor++]));
++      }
+     } else if (block.type === "tool_result" && Array.isArray(block.content) && Array.isArray(native.content)) {
+       output.push({ ...structuredClone(block), content: alignCanonicalContent(block.content, native.content, where) });
+     } else {
+diff --git a/src/transcript.ts b/src/transcript.ts
+index 8dd5f884633b118769b06edd73c24f0a19e1d9f0..5a126542eff9af0fb4ebbccae69ff1df610b57fe 100644
+--- a/src/transcript.ts
++++ b/src/transcript.ts
+@@ -11,6 +11,7 @@ import {
+   type SystemMessage,
+   type TextContent,
+   type Tool,
++  type ToolCall,
+   type ToolResultMessage,
+ } from "@earendil-works/pi-ai";
+ import { supportsAdaptiveThinking, supportsDisabledThinking } from "./model-catalog.ts";
+@@ -60,7 +61,7 @@ function nativeToolUseId(id: string): string {
+ 
+ export function prepareMessages(messages: Message[], model: Model<any>): Message[] {
+   const toolCallIds = new Map<string, string>();
+-  return messages.map((message) => {
++  const normalized: Message[] = messages.map((message) => {
+     if (message.role === "toolResult") {
+       const id = toolCallIds.get(message.toolCallId);
+       return id && id !== message.toolCallId ? { ...message, toolCallId: id } : message;
+@@ -86,6 +87,74 @@ export function prepareMessages(messages: Message[], model: Model<any>): Message
+       }),
+     };
+   });
++  return closeOrphanedToolCalls(normalized);
++}
++
++/**
++ * Replay-safe second pass, matching what pi-ai's transformMessages does for the built-in
++ * providers. Extensions cannot import `pi-ai/api/*` (the loader maps only the root and a few
++ * subpaths), so the rule is restated here.
++ *
++ * An interrupted turn leaves an assistant message that holds a tool call with no result. Pi
++ * keeps that message, and prepareFrames would replay it as `tool_use` with a plain user message
++ * where the `tool_result` belongs, so Anthropic rejects the request:
++ * "`tool_use` ids were found without `tool_result` blocks immediately after ...". Because that
++ * history is replayed on every later turn, the session is then stuck (issue #49).
++ *
++ * So: never replay an incomplete turn (`stopReason` "error" or "aborted"), and answer every tool
++ * call that has no result with an error tool result at the point where its turn ends.
++ */
++function closeOrphanedToolCalls(messages: Message[]): Message[] {
++  const output: Message[] = [];
++  let pending: ToolCall[] = [];
++  let answered = new Set<string>();
++  // A system message that lands between a tool call and its results must not end the turn, so it
++  // waits for the results, synthetic ones included, and is emitted after them.
++  const heldSystemMessages: Message[] = [];
++
++  const closePending = () => {
++    for (const call of pending) {
++      if (answered.has(call.id)) continue;
++      output.push({
++        role: "toolResult",
++        toolCallId: call.id,
++        toolName: call.name,
++        content: [{ type: "text", text: "No result provided" }],
++        isError: true,
++        timestamp: Date.now(),
++      } satisfies ToolResultMessage);
++    }
++    pending = [];
++    answered = new Set<string>();
++    output.push(...heldSystemMessages);
++    heldSystemMessages.length = 0;
++  };
++
++  for (const message of messages) {
++    if (message.role === "assistant") {
++      // Whatever turn came before ends here, so its unanswered calls are answered now.
++      closePending();
++      if (message.stopReason === "error" || message.stopReason === "aborted") continue;
++      const calls = message.content.filter((block) => block.type === "toolCall");
++      if (calls.length > 0) {
++        pending = calls;
++        answered = new Set<string>();
++      }
++      output.push(message);
++    } else if (message.role === "toolResult") {
++      answered.add(message.toolCallId);
++      output.push(message);
++    } else if (message.role === "system") {
++      if (pending.length > 0) heldSystemMessages.push(message);
++      else output.push(message);
++    } else {
++      // A user turn, like the end of the history, closes the tool flow of the turn before it.
++      if (message.role === "user") closePending();
++      output.push(message);
++    }
++  }
++  closePending();
++  return output;
+ }
+ 
+ function clone<T>(value: T): T {
+diff --git a/tests/claude-cli.test.ts b/tests/claude-cli.test.ts
+index 78128012bbc612120695630055411ae7be3cec42..9d9ed8c4ba046b15fca09dcde26d9c7b04ba86a3 100644
+--- a/tests/claude-cli.test.ts
++++ b/tests/claude-cli.test.ts
+@@ -801,3 +801,23 @@ test("reports upstream 5xx as retryable and keeps 4xx non-retryable", async () =
+   assert.match(invalid.message, /Incomplete Claude Code upstream response \(status 400.*upstream said: bad request/);
+   assert.equal(invalid.retryable, false);
+ });
++
++test("keeps a tool result whose canonical content already has the image scale note", () => {
++  const image = { type: "image", source: { type: "base64", media_type: "image/jpeg", data: "shot" } };
++  const note = text("[Image: original 728x2490, displayed at 585x2000. Multiply coordinates by 1.24 to map to original image.]");
++  const result = { type: "tool_result", tool_use_id: "t1", content: [text("{}"), image, note] };
++  const frames = framesFor([
++    { role: "user", content: [text("preview")] },
++    { role: "assistant", content: [{ type: "tool_use", id: "t1", name: "html_preview", input: {} }] },
++    { role: "user", content: [result] },
++  ]);
++  const rewritten = rewrite(
++    [
++      { role: "user", content: [text("preview")] },
++      { role: "assistant", content: [{ type: "tool_use", id: "t1", name: "html_preview", input: {} }] },
++      { role: "user", content: [result] },
++    ],
++    frames,
++  );
++  assert.deepEqual(rewritten[2]?.content, [result]);
++});
+diff --git a/tests/transcript.test.ts b/tests/transcript.test.ts
+index 82375507b9fa64479f34f53d3ef65de7d0b12f0a..d54cdd5e866f0d91ba0881c7c527598dce16fb63 100644
+--- a/tests/transcript.test.ts
++++ b/tests/transcript.test.ts
+@@ -304,3 +304,115 @@ test("normalizes foreign tool call ids and drops foreign reasoning before replay
+   assert.equal((frames[2]?.message.content[0] as { tool_use_id: string }).tool_use_id, toolUse[1]!.id);
+   assert.deepEqual(messages, original);
+ });
++
++test("drops an interrupted turn so its unfinished tool call is not replayed", () => {
++  // A real shape: Esc landed while the model emitted a bash call, so the saved assistant turn
++  // carries a tool call with no result. Replaying it made every later request fail with
++  // "`tool_use` ids were found without `tool_result` blocks immediately after".
++  const model = { id: "sonnet", api: "claude-code-stream-json", provider: "claude-code", input: ["text", "image"] } as unknown as Model<any>;
++  const answered: AssistantMessage = {
++    role: "assistant",
++    api: model.api,
++    provider: model.provider,
++    model: model.id,
++    content: [{ type: "text", text: "listing" }, { type: "toolCall", id: "t1", name: "bash", arguments: { command: "ls" } }],
++    usage,
++    stopReason: "toolUse",
++    timestamp: 1,
++  };
++  const interrupted: AssistantMessage = {
++    role: "assistant",
++    api: model.api,
++    provider: model.provider,
++    model: model.id,
++    content: [{ type: "thinking", thinking: "planning the next step", thinkingSignature: "signed" }, { type: "toolCall", id: "t2", name: "bash", arguments: {} }],
++    usage,
++    stopReason: "aborted",
++    timestamp: 2,
++  };
++  const messages: Message[] = [
++    { role: "user", content: "go", timestamp: 0 },
++    answered,
++    { role: "toolResult", toolCallId: "t1", toolName: "bash", content: [{ type: "text", text: "a" }], isError: false, timestamp: 3 },
++    interrupted,
++    { role: "user", content: "continue", timestamp: 4 },
++  ];
++  const original = structuredClone(messages);
++
++  const prepared = prepareMessages(messages, model);
++  assert.equal(prepared.some((message) => message.role === "assistant" && message.stopReason === "aborted"), false);
++  assertBalancedFrames(prepareFrames(prepared));
++  assert.deepEqual(messages, original);
++});
++
++test("answers a replayed tool call that has no result before the next user turn", () => {
++  const model = { id: "sonnet", api: "claude-code-stream-json", provider: "claude-code", input: ["text", "image"] } as unknown as Model<any>;
++  const assistant: AssistantMessage = {
++    role: "assistant",
++    api: model.api,
++    provider: model.provider,
++    model: model.id,
++    content: [{ type: "toolCall", id: "t1", name: "read", arguments: { path: "a" } }, { type: "toolCall", id: "t2", name: "read", arguments: { path: "b" } }],
++    usage,
++    stopReason: "toolUse",
++    timestamp: 1,
++  };
++  const messages: Message[] = [
++    { role: "user", content: "read both", timestamp: 0 },
++    assistant,
++    { role: "toolResult", toolCallId: "t1", toolName: "read", content: [{ type: "text", text: "A" }], isError: false, timestamp: 2 },
++    { role: "user", content: "and now?", timestamp: 3 },
++  ];
++  const original = structuredClone(messages);
++
++  const prepared = prepareMessages(messages, model);
++  const synthetic = prepared.find((message) => message.role === "toolResult" && message.toolCallId === "t2");
++  assert.ok(synthetic);
++  assert.equal(synthetic.role, "toolResult");
++  if (synthetic.role === "toolResult") {
++    assert.equal(synthetic.isError, true);
++    assert.equal(synthetic.toolName, "read");
++    assert.deepEqual(synthetic.content, [{ type: "text", text: "No result provided" }]);
++  }
++  assert.ok(prepared.indexOf(synthetic) < prepared.length - 1, "the answer precedes the next user turn");
++  assert.equal(prepared.filter((message) => message.role === "toolResult").length, 2, "an answered call is not answered twice");
++  assertBalancedFrames(prepareFrames(prepared));
++  assert.deepEqual(messages, original);
++});
++
++test("holds a system message until a turn's tool results are complete", () => {
++  const model = { id: "sonnet", api: "claude-code-stream-json", provider: "claude-code", input: ["text", "image"] } as unknown as Model<any>;
++  const assistant: AssistantMessage = {
++    role: "assistant",
++    api: model.api,
++    provider: model.provider,
++    model: model.id,
++    content: [{ type: "toolCall", id: "t1", name: "read", arguments: { path: "a" } }],
++    usage,
++    stopReason: "toolUse",
++    timestamp: 1,
++  };
++  const messages: Message[] = [
++    { role: "user", content: "read", timestamp: 0 },
++    assistant,
++    { role: "system", content: [{ type: "text", text: "tools changed" }], timestamp: 2 },
++    { role: "toolResult", toolCallId: "t1", toolName: "read", content: [{ type: "text", text: "A" }], isError: false, timestamp: 3 },
++    { role: "user", content: "next", timestamp: 4 },
++  ];
++  const prepared = prepareMessages(messages, model);
++  const roles = prepared.map((message) => message.role);
++  assert.deepEqual(roles, ["user", "assistant", "toolResult", "system", "user"]);
++  assertBalancedFrames(prepareFrames(prepared));
++});
++
++function assertBalancedFrames(frames: ReturnType<typeof prepareFrames>): void {
++  const calls = new Set<string>();
++  const results = new Set<string>();
++  for (const frame of frames) {
++    for (const block of frame.message.content as Array<Record<string, unknown>>) {
++      if (block.type === "tool_use") calls.add(String(block.id));
++      if (block.type === "tool_result") results.add(String(block.tool_use_id));
++    }
++  }
++  assert.deepEqual([...calls].sort(), [...results].sort(), "every replayed tool_use needs exactly one tool_result");
++}
