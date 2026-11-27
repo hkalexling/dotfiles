@@ -1,0 +1,20 @@
+{
+  "enabled": true,
+  "policy": "hibernate_all_except_keep",
+  "keep_focused": true,
+  "keep_at_least": 1,
+  "max_per_boot": 40,
+  "dry_run": false,
+  "keep": [
+    {
+      "label": "paper"
+    }
+  ],
+  "wake_stagger_ms": 250,
+  "wake_shell_settle_ms": 400,
+  "delete_on_wake": true,
+  "wake_kept": true,
+  "wake_kept_timeout_ms": 60000,
+  "wake_codex_auto": true,
+  "wake_codex_window_hours": 72
+}

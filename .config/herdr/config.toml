@@ -1,0 +1,37 @@
+onboarding = false
+
+# The workspace-hibernate plugin owns agent resume now: hibernated workspaces
+# must not have their agents auto-started at boot. Wake them from the picker.
+[session]
+resume_agents_on_restore = false
+
+[keys]
+detach = "prefix+d"
+
+[[keys.command]]
+key = "prefix+shift+z"
+type = "plugin_action"
+command = "alex.workspace-hibernate.hibernate"
+description = "hibernate this workspace"
+
+[[keys.command]]
+key = "prefix+u"
+type = "plugin_action"
+command = "alex.workspace-hibernate.hibernate-idle"
+description = "hibernate every idle workspace"
+
+[[keys.command]]
+key = "prefix+shift+u"
+type = "pane"
+command = "herdr plugin pane open --plugin alex.workspace-hibernate --entrypoint picker"
+description = "wake a hibernated workspace"
+
+[theme]
+name = "one-dark"
+auto_switch = false
+
+[ui.toast]
+delivery = "system"
+
+[ui.sound]
+enabled = false
