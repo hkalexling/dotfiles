@@ -18,6 +18,10 @@ x-scheme-handler/about=tmux-browser.desktop
 x-scheme-handler/unknown=tmux-browser.desktop
 x-scheme-handler/slack=com.slack.Slack.desktop
 application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-startcenter.desktop
+x-scheme-handler/grokbot=grok-bot.desktop
+x-scheme-handler/sand=grok-bot.desktop
+x-scheme-handler/claude-cli=claude-code-url-handler.desktop
+x-scheme-handler/t3code=com.t3tools.T3Code.desktop
 
 [Added Associations]
 x-scheme-handler/http=chromium.desktop;
@@ -32,3 +36,4 @@ application/xhtml+xml=chromium.desktop;
 application/x-extension-xhtml=chromium.desktop;
 application/x-extension-xht=chromium.desktop;
 application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-startcenter.desktop;
+x-scheme-handler/t3code=com.t3tools.T3Code.desktop;
