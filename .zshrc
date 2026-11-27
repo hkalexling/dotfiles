@@ -136,6 +136,13 @@ case ":$PATH:" in
 esac
 # pnpm end
 
+# pi (managed install launcher)
+case ":$PATH:" in
+  *":$HOME/.pi/agent/bin:"*) ;;
+  *) export PATH="$HOME/.pi/agent/bin:$PATH" ;;
+esac
+# pi end
+
 export PATH=$PATH:~/.local/bin
 
 # plugin from https://archlinux.org/packages/extra/any/zsh-syntax-highlighting/

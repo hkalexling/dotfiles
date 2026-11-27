@@ -1,11 +1,9 @@
 {
-  "$schema": "https://unpkg.com/@aliou/pi-neuralwatt@0.7.6/schema.json",
+  "$schema": "https://unpkg.com/@aliou/pi-neuralwatt@0.18.0/schema.json",
   "provider": {
     "includeLegacyModelIds": false
   },
   "quotaCommand": {},
   "quotaWarnings": {},
-  "subBarIntegration": {
-    "enabled": true
-  }
+  "version": "0.18.0"
 }

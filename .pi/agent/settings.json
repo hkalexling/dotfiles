@@ -1,18 +1,32 @@
 {
-  "lastChangelogVersion": "0.99.1",
-  "defaultProvider": "opencode-go",
-  "defaultModel": "deepseek-v4.1-flash",
-  "defaultThinkingLevel": "max",
+  "lastChangelogVersion": "1.6.1",
+  "defaultProvider": "claude-code",
+  "defaultModel": "claude-opus-5-5",
+  "defaultThinkingLevel": "high",
   "hideThinkingBlock": false,
   "theme": "dark-legacy",
   "packages": [
     "https://github.com/fitchmultz/pi-agent-browser-native",
     "https://github.com/aliou/pi-neuralwatt",
     "npm:pi-footer",
-    "npm:pi-mcp-adapter"
+    "npm:pi-mcp-adapter",
+    "npm:@rahularya01/pi-cursor",
+    "npm:pi-goal-x@0.34.1",
+    "https://github.com/earendil-works/pi-claude-code"
   ],
   "powerline": "default",
   "compaction": {
     "enabled": false
+  },
+  "extensions": [
+    "-builtin:mcp"
+  ],
+  "tuiMode": "regular",
+  "extensionChangelogVersions": {
+    "{\"source\":\"https://github.com/fitchmultz/pi-agent-browser-native\",\"scope\":\"user\"}": "0.9.46",
+    "{\"source\":\"https://github.com/aliou/pi-neuralwatt\",\"scope\":\"user\"}": "0.21.1",
+    "{\"source\":\"npm:pi-footer\",\"scope\":\"user\"}": "0.5.1",
+    "{\"source\":\"npm:pi-mcp-adapter\",\"scope\":\"user\"}": "7.0.1",
+    "{\"source\":\"npm:@rahularya01/pi-cursor\",\"scope\":\"user\"}": "1.4.39"
   }
 }
