@@ -1,0 +1,16 @@
+[Unit]
+Description=Herdr App workspace hibernation and agent resume
+
+[Service]
+Type=simple
+Environment="HERDR_HIBERNATE_HC=/home/alex_ling/.local/bin/hc"
+Environment="HERDR_HIBERNATE_STATE=/home/alex_ling/.local/state/herdr-app-hibernate"
+Environment="HERDR_APP_HOME=/home/alex_ling/.config/herdr-app"
+ExecStart="/usr/bin/python3" "/home/alex_ling/.local/bin/herdr-hibernate" serve
+UnsetEnvironment=HC_SESSION HC_SOCKET HC_TERMINAL_ID HC_TERMINAL_SOCKET
+KillMode=process
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=default.target

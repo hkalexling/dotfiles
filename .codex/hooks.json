@@ -1,0 +1,1 @@
+{"hooks":{"SessionStart":[{"hooks":[{"command":"bash '/home/alex_ling/.codex/herdr-agent-state.sh' session","timeout":10,"type":"command"}]},{"hooks":[{"type":"command","command":"/home/alex_ling/.local/bin/herdr-hibernate hook codex","timeout":20}]}]}}

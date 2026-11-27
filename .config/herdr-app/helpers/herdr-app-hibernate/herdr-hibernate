@@ -1,0 +1,120 @@
+#!/usr/bin/env python3
+"""Command line for workspace hibernation and boot recovery."""
+
+import argparse
+import json
+import sys
+import time
+from pathlib import Path
+
+from capture import capture_hook
+from core import Core, Error, locked_store
+from migration import CLASSIC, read_classic_snapshots, read_live_classic, save_imports
+from workspaces import (
+    begin_wake, checkpoint, current_space, launch, reconcile_boot, recover_pending, sleep_space,
+)
+
+
+def summary(data):
+    return [
+        {"id": space["id"], "name": space.get("name") or space["folder"] or space["id"],
+         "folder": space["folder"], "tabs": [t["name"] for t in space["tabs"]],
+         "agents": len({p["terminal"] for p in snap["panes"].values() if p.get("session")}
+                       | snap.get("workers", {}).keys()),
+         "warnings": snap.get("import_warnings", [])}
+        for snap in reversed(list(data["parked"].values()))
+        for space in (snap["space"],)
+    ]
+
+
+def delete_parked(store, space_id):
+    pending = store.data.get("pending")
+    if pending and pending["snapshot"]["space"]["id"] == space_id:
+        raise Error("That space has a hibernation or wake operation in progress")
+    snapshot = store.data["parked"].pop(space_id, None)
+    if snapshot is not None:
+        store.save()
+    return {"id": space_id, "deleted": snapshot is not None}
+
+
+def service(once=False):
+    while True:
+        try:
+            with Core() as core:
+                while True:
+                    with locked_store(core) as store:
+                        recover_pending(core, store)
+                        reconcile_boot(core, store)
+                        checkpoint(core, store)
+                    if once:
+                        return {"ok": True}
+                    time.sleep(2)
+        except (Error, OSError, ValueError, KeyError) as error:
+            if once:
+                raise
+            print(f"herdr-hibernate: {error}", file=sys.stderr, flush=True)
+            time.sleep(2)
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    commands = parser.add_subparsers(dest="command", required=True)
+    for name in ("list", "serve", "boot", "recover"):
+        commands.add_parser(name)
+    for name in ("hibernate", "wake", "delete"):
+        commands.add_parser(name).add_argument("id")
+    migrate = commands.add_parser("import-classic")
+    source = migrate.add_mutually_exclusive_group()
+    source.add_argument("--from", dest="directory", type=Path)
+    source.add_argument("--live", action="store_true", help="Read open spaces from the classic TUI")
+    migrate.add_argument("--apply", action="store_true")
+    commands.add_parser("hook").add_argument("agent", choices=("pi", "codex"))
+    commands.add_parser("launch").add_argument("argv", nargs=argparse.REMAINDER)
+    args = parser.parse_args()
+    command = args.command
+    if command == "launch":
+        launch(args.argv[1:] if args.argv[:1] == ["--"] else args.argv)
+    if command == "hook":
+        result = capture_hook(args.agent, json.load(sys.stdin))
+        # Empty stdout is Codex's success response for a no-op hook.
+        return result if args.agent == "pi" else None
+    if command in {"serve", "boot"}:
+        return service(once=command == "boot")
+    if command == "import-classic":
+        snapshots, errors = read_live_classic() if args.live else read_classic_snapshots(args.directory or CLASSIC)
+        if not args.apply:
+            return save_imports(snapshots, errors)
+        with Core() as core, locked_store(core) as store:
+            return save_imports(snapshots, errors, store)
+    with Core() as core, locked_store(core) as store:
+        if command == "list":
+            return {"spaces": summary(store.data), "pending": bool(store.data.get("pending"))}
+        if command == "delete":
+            return delete_parked(store, args.id)
+        recovered = recover_pending(core, store)
+        if command == "recover":
+            return recovered or {"ok": True}
+        reconcile_boot(core, store)
+        if command == "hibernate":
+            return sleep_space(core, store, args.id)
+        snapshot = store.data["parked"].get(args.id)
+        if snapshot is None:
+            if recovered and recovered.get("id") == args.id:
+                return recovered
+            raise Error("That space is no longer hibernated")
+        _, doc = core.document()
+        if current_space(doc, args.id) is not None:
+            raise Error("A live space already has this identity")
+        result = begin_wake(core, store, snapshot)
+        checkpoint(core, store)
+        return result
+
+
+if __name__ == "__main__":
+    try:
+        result = main()
+        if result is not None:
+            print(json.dumps(result, ensure_ascii=False))
+    except (Error, OSError, ValueError, KeyError) as error:
+        print(f"herdr-hibernate: {error}", file=sys.stderr)
+        sys.exit(1)

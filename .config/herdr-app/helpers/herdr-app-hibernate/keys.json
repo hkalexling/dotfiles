@@ -1,0 +1,7 @@
+{
+  "global": {
+    "ctrl-shift-p": "mod.open:workspace-command-palette",
+    "ctrl-shift-h": "mod.open:workspace-hibernate-current",
+    "ctrl-shift-r": "mod.open:workspace-hibernate"
+  }
+}
