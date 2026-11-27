@@ -1,8 +1,8 @@
 {
-  "maxConcurrent": 8,
+  "maxConcurrent": 16,
   "defaultMaxTurns": 0,
   "graceTurns": 5,
-  "defaultModel": "opencode-go/muse-spark-1.3-contributor",
-  "defaultThinking": "high",
+  "defaultModel": "claude-code/claude-opus-5-5",
+  "defaultThinking": "xhigh",
   "agents": {}
 }

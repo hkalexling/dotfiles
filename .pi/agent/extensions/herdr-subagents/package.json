@@ -1,0 +1,9 @@
+{
+  "name": "herdr-subagents",
+  "private": true,
+  "type": "module",
+  "description": "herdr subagent workers: spawn/manage tools plus completion notifications and a status widget",
+  "scripts": {
+    "test": "node --test test/*.test.ts"
+  }
+}
